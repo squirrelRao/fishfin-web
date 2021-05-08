@@ -1,6 +1,10 @@
 # fishfin-web
 fishfin web
 
+vue init webpack <project name>
+vue add element 
+ 
+ 
 ## Enviroment setup
 https://nodejs.org/en/
 
@@ -29,3 +33,5 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### ui框架 element-ui  
 https://element.eleme.io/#/zh-CN/component/installation
+
+
