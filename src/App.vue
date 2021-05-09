@@ -27,7 +27,27 @@ export default {
           message: '恭喜你，这是一条成功消息',
           type: 'success'
         });
+        this.reqHttp()
+    },
+    reqHttp: function() {
+     
+      this.$api.http("/", "get", {}).then(res => {
+        console.log(res);
+        this.$message({
+          showClose: true,
+          message: res["data"],
+          type: "success"
+        });
+      }).catch(err => {
+        console.log(err);
+        this.$message({
+          showClose: true,
+          message: "",
+          type: "error"
+        });
+      });
     }
+    
   }
 }
 </script>
