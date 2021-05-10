@@ -10,7 +10,7 @@
               <el-row align="middle" type="flex" >
                 <el-col>
                   <div class="grid-content"><el-image :src="require('@/assets/logo.png')" :fit="fit" style="width:210px"></el-image></div>
-                  <div class="grid-slogon-content">欢迎光临</div>
+                  <div class="grid-slogon-content">感知水流 保持平衡</div>
                   <div class="grid-content"><el-button round>进入鱼鳍</el-button></div>
                 </el-col>
               </el-row>
