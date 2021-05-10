@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="login">
     <el-container>
   <el-header></el-header>
   <el-main class="main">
@@ -9,10 +9,8 @@
         <el-col :span="12">
               <el-row align="middle" type="flex" >
                 <el-col>
-                  <div class="grid-content"><el-image :src="require('@/assets/logo.png')" style="width:210px"></el-image></div>
-                  <div class="grid-slogon-content">感知水流 保持平衡</div>
-                  <div class="grid-content"><el-button round @click="enter">进入鱼鳍</el-button></div>
-                  <div><el-link href="/login" target="_blank">默认链接</el-link></div>
+                  <div class="grid-slogon-content">-_-</div>
+                  <div class="grid-content"><el-button round>登录</el-button></div>
                 </el-col>
               </el-row>
         </el-col>
@@ -48,23 +46,10 @@
 </style>
 <script>
 export default {
-  name: 'app',
+  name: 'login',
   methods:{
-    enter:function(){
-      
-      if(this.$store.getters.isLogin == false){
-        console.log(this.$store.getters.isLogin);
-        this.$router.push( { path: "/login"});
-        // this.$router.push( { path: "/login"});
-        // this.$route.go(0);
-      }else{
-        this.$message({
-          showClose: true,
-          message: this.$store.state.name,
-          type: "success"
-        });
-      }
-
+    hi(){
+        this.reqHttp()
     },
     reqHttp: function() {
      
@@ -90,7 +75,7 @@ export default {
 </script>
 
 <style>
-#app {
+#login {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

@@ -18,7 +18,9 @@ const store = new Vuex.Store({
     
   },
   getters:{
-    isLogin: user_id == '' ? false : true    
+    isLogin(state){
+      return state.user_id == '' ? false : true;
+    }
   },
   actions: {
    
