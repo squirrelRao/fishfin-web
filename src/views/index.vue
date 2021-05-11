@@ -18,10 +18,13 @@
 <style>
 .main{
   height: 100%;
+  width: 100%;
   overflow: auto;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .grid-content {

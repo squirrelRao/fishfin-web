@@ -1,7 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import login from '@/views/user/login'
+import regist from '@/views/user/regist'
 import index from '@/views/index'
+import focus from '@/views/center/focus'
+import simulation from '@/views/center/simulation'
+import center_head from '@/views/center/center_head'
 
 Vue.use(Router)
 
@@ -11,12 +15,39 @@ const router =  new Router({
     {
       path: '/',
       name: 'index',
-      component: index
+      components: {
+        main:index
+      }
     },
     {
       path: '/login',
       name: 'login',
-      component: login
+      components: {
+        main:login
+      }
+    },
+    {
+      path: '/regist',
+      name: 'regist',
+      components: {
+        main:regist
+      }
+    },
+    {
+      path: '/center/focus',
+      name: 'center',
+      components: {
+        header:center_head,
+        main:focus
+      }
+    },
+    {
+      path: '/center/simulation',
+      name: 'simulation',
+      components: {
+        header:center_head,
+        main:simulation
+      }
     }
   ]
 })

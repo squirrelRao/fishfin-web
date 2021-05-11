@@ -1,17 +1,12 @@
 <template>
-  <div id="login" class="main">
+  <div id="simulation" class="main">
       <el-row align="middle" type="flex">
         <el-col :span="6"></el-col>
         <el-col :span="12">
               <el-row align="middle" type="flex" >
-                <el-col>
-                  <div class="grid-content"><el-image :src="require('@/assets/logo.png')" style="width:210px;cursor:Pointer" @click="toIndex"></el-image></div>
-                </el-col>
-              </el-row>
-              <el-row align="middle" type="flex" >
                <el-col :span="8"></el-col>
                 <el-col :span="8">
-                  <div class="grid-slogon-content">登 录
+                  <div class="grid-slogon-content">模拟
                   </div>
                 </el-col>
                  <el-col :span="2"></el-col>
@@ -75,7 +70,7 @@
 </style>
 <script>
 export default {
-  name: 'login',
+  name: 'simulation',
   data() {
     return {
       phone: '',
@@ -92,8 +87,8 @@ export default {
     toIndex:function(){
       this.$router.push({"path":"/"});
     },
-    enter(){
-        this.$router.push({"name":"center"});
+    hi(){
+        this.reqHttp()
     },
     reqHttp: function() {
      

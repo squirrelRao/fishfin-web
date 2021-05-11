@@ -1,20 +1,13 @@
 <template>
-  <div id="app">
+  <div id="app" >
   <el-container>
-  <el-header></el-header>
-  <el-main><router-view></router-view></el-main>
-  <el-footer></el-footer>
+  <el-header><router-view name="header"></router-view></el-header>
+  <el-main><router-view name="main"></router-view></el-main>
+  <el-footer><router-view name="footer"></router-view></el-footer>
 </el-container>
 </div>
 </template>
 <style>
-.main{
-  height: 100%;
-  overflow: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-}
 
 </style>
 <script>
@@ -37,6 +30,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-left: auto;
+  margin-right: auto;
 }
 </style>

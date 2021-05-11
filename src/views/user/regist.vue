@@ -11,7 +11,7 @@
               <el-row align="middle" type="flex" >
                <el-col :span="8"></el-col>
                 <el-col :span="8">
-                  <div class="grid-slogon-content">登 录
+                  <div class="grid-slogon-content">注 册
                   </div>
                 </el-col>
                  <el-col :span="2"></el-col>
@@ -19,25 +19,41 @@
               <el-row align="middle"  type="flex" >
                 <el-col :span="8"></el-col>
                 <el-col :span="8">
-                  <div class="grid-slogon-content">手机号: <el-input v-model="phone" placeholder="请输入手机号" style="width:200px"/></div>
+                  <div class="grid-slogon-content"><font style="color:red">*</font>手机号: <el-input v-model="phone" placeholder="请输入手机号" style="width:200px"/></div>
                 </el-col>
                 <el-col :span="2"></el-col>
               </el-row>
                <el-row align="middle"  type="flex" >
                  <el-col :span="8"></el-col>
                 <el-col :span="8">
-                  <div class="grid-slogon-content">验证码: <el-input v-model="code" placeholder="请输入验证码" style="width:200px"/>
+                  <div class="grid-slogon-content"><font style="color:red">*</font>验证码: <el-input v-model="code" placeholder="请输入验证码" style="width:200px"/>
                   </div>
                 </el-col>
                  <el-col :span="2"><el-link type="primary">获取验证码</el-link></el-col>
               </el-row>
-              <el-row align="middle"  type="flex" >
-                 <el-col :span="10"></el-col>
-                <el-col :span="3">
-                  <div class="grid-slogon-content"><div class="grid-content" style="margin-top:20px"><el-button plain @click="enter">登 录</el-button></div>
+               <el-row align="middle"  type="flex" >
+                 <el-col :span="8"></el-col>
+                <el-col :span="8">
+                  <div class="grid-slogon-content">昵 称: <el-input v-model="nickname" placeholder="请输入昵称" style="width:200px;margin-left:10px"/>
                   </div>
                 </el-col>
-                 <el-col :span="2"><el-link type="info" class="regist_tip" @click="toRegist">没有账号?</el-link></el-col>
+                 <el-col :span="2"></el-col>
+              </el-row>
+               <el-row align="middle"  type="flex" >
+                 <el-col :span="8"></el-col>
+                <el-col :span="8">
+                  <div class="grid-slogon-content"><font style="color:red">*</font>邀请码: <el-input v-model="code" placeholder="请输入邀请码" style="width:200px"/>
+                  </div>
+                </el-col>
+                 <el-col :span="2"><el-link type="primary"></el-link></el-col>
+              </el-row>
+              <el-row align="middle"  type="flex">
+                 <el-col :span="10"></el-col>
+                <el-col :span="3">
+                  <div class="grid-slogon-content"><div class="grid-content" style="margin-top:20px"><el-button plain @click="enter">提 交</el-button></div>
+                  </div>
+                </el-col>
+                 <el-col :span="2"><el-button plain @click="back">取 消</el-button></el-col>
               </el-row>
         </el-col>
         <el-col :span="6"></el-col>
@@ -86,14 +102,11 @@ export default {
 
   },
   methods:{
-    toRegist:function(){
-      this.$router.push({"name":"regist"});
-    },
     toIndex:function(){
       this.$router.push({"path":"/"});
     },
-    enter(){
-        this.$router.push({"name":"center"});
+    back(){
+      this.$router.push({"name":"login"});
     },
     reqHttp: function() {
      
