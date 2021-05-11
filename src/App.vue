@@ -1,28 +1,11 @@
 <template>
   <div id="app">
-    <el-container>
+  <el-container>
   <el-header></el-header>
-  <el-main class="main">
-    <div>
-      <el-row align="middle" type="flex">
-        <el-col :span="6"></el-col>
-        <el-col :span="12">
-              <el-row align="middle" type="flex" >
-                <el-col>
-                  <div class="grid-content"><el-image :src="require('@/assets/logo.png')" style="width:210px"></el-image></div>
-                  <div class="grid-slogon-content">感知水流 保持平衡</div>
-                  <div class="grid-content"><el-button round @click="enter">进入鱼鳍</el-button></div>
-                  <div><el-link href="/login" target="_blank">默认链接</el-link></div>
-                </el-col>
-              </el-row>
-        </el-col>
-        <el-col :span="6"></el-col>
-    </el-row>
-    </div>
-  </el-main>
+  <el-main><router-view></router-view></el-main>
   <el-footer></el-footer>
 </el-container>
-  </div>
+</div>
 </template>
 <style>
 .main{
@@ -33,58 +16,16 @@
   justify-content: space-around;
 }
 
-.grid-content {
-  text-align: center;
-  font-weight: bold;
-
-}
-.grid-slogon-content {
-  text-align: center;
-  font-weight: bold;
-  margin-bottom:20px;
-  margin-top: 20px;
-}
-
 </style>
 <script>
 export default {
   name: 'app',
   methods:{
-    enter:function(){
-      
-      if(this.$store.getters.isLogin == false){
-        console.log(this.$store.getters.isLogin);
-        this.$router.push( { path: "/login"});
-        // this.$router.push( { path: "/login"});
-        // this.$route.go(0);
-      }else{
-        this.$message({
-          showClose: true,
-          message: this.$store.state.name,
-          type: "success"
-        });
-      }
 
-    },
-    reqHttp: function() {
-     
-      this.$api.http("/", "get", {}).then(res => {
-        console.log(res);
-        this.$message({
-          showClose: true,
-          message: res["data"],
-          type: "success"
-        });
-      }).catch(err => {
-        console.log(err);
-        this.$message({
-          showClose: true,
-          message: "",
-          type: "error"
-        });
-      });
+    toIndex:function(){
+
+      this.$router.push({"name":"index"});
     }
-    
   }
 }
 </script>

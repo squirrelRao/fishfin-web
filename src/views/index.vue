@@ -1,13 +1,13 @@
 <template>
-  <div id="login" class="main">
+  <div id="index" class="main">
       <el-row align="middle" type="flex">
         <el-col :span="6"></el-col>
         <el-col :span="12">
               <el-row align="middle" type="flex" >
                 <el-col>
-                  <div class="grid-content"><el-image :src="require('@/assets/logo.png')" style="width:210px" @click="toIndex"></el-image></div>
-                   <div class="grid-slogon-content">感知水流 保持平衡</div>
-                  <div class="grid-content"><el-button round >登录</el-button></div>
+                  <div class="grid-content"><el-image :src="require('@/assets/logo.png')" style="width:210px"></el-image></div>
+                  <div class="grid-slogon-content">感知水流 保持平衡</div>
+                  <div class="grid-content"><el-button round @click="enter">进入鱼鳍</el-button></div>
                 </el-col>
               </el-row>
         </el-col>
@@ -39,16 +39,21 @@
 </style>
 <script>
 export default {
-  name: 'login',
-  mounted:{
-
-  },
+  name: 'index',
   methods:{
-    toIndex:function(){
-      this.$router.push({"path":"/"});
-    },
-    hi(){
-        this.reqHttp()
+    enter:function(){
+      
+      if(this.$store.getters.isLogin == false){
+        console.log(this.$store.getters.isLogin);
+        this.$router.push( { name: "login"});
+      }else{
+        this.$message({
+          showClose: true,
+          message: this.$store.state.name,
+          type: "success"
+        });
+      }
+
     },
     reqHttp: function() {
      
@@ -71,9 +76,9 @@ export default {
     
   }
 }
-console.log("hi");
 </script>
 
 <style>
+
 
 </style>
