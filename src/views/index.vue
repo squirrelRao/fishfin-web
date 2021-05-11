@@ -5,7 +5,7 @@
         <el-col :span="12">
               <el-row align="middle" type="flex" >
                 <el-col>
-                  <div class="grid-content"><el-image :src="require('@/assets/logo.png')" style="width:210px"></el-image></div>
+                  <div class="grid-content"><el-image :src="require('@/assets/logo.png')" style="width:210px;cursor:Pointer"></el-image></div>
                   <div class="grid-slogon-content">感知水流 保持平衡</div>
                   <div class="grid-content"><el-button round @click="enter">进入鱼鳍</el-button></div>
                 </el-col>
