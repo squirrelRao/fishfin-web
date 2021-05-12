@@ -1,44 +1,15 @@
 <template>
-  <div id="simulation" class="main">
-      <el-row align="middle" type="flex">
-        <el-col :span="6"></el-col>
-        <el-col :span="12">
-              <el-row align="middle" type="flex" >
-               <el-col :span="8"></el-col>
-                <el-col :span="8">
-                  <div class="grid-slogon-content">模拟
-                  </div>
-                </el-col>
-                 <el-col :span="2"></el-col>
-              </el-row>
-              <el-row align="middle"  type="flex" >
-                <el-col :span="8"></el-col>
-                <el-col :span="8">
-                  <div class="grid-slogon-content">手机号: <el-input v-model="phone" placeholder="请输入手机号" style="width:200px"/></div>
-                </el-col>
-                <el-col :span="2"></el-col>
-              </el-row>
-               <el-row align="middle"  type="flex" >
-                 <el-col :span="8"></el-col>
-                <el-col :span="8">
-                  <div class="grid-slogon-content">验证码: <el-input v-model="code" placeholder="请输入验证码" style="width:200px"/>
-                  </div>
-                </el-col>
-                 <el-col :span="2"><el-link type="primary">获取验证码</el-link></el-col>
-              </el-row>
-              <el-row align="middle"  type="flex" >
-                 <el-col :span="10"></el-col>
-                <el-col :span="3">
-                  <div class="grid-slogon-content"><div class="grid-content" style="margin-top:20px"><el-button plain @click="enter">登 录</el-button></div>
-                  </div>
-                </el-col>
-                 <el-col :span="2"><el-link type="info" class="regist_tip" @click="toRegist">没有账号?</el-link></el-col>
-              </el-row>
-        </el-col>
-        <el-col :span="6"></el-col>
+   <div id="simulation" class="main">
+    <el-row class="tab_panes">
+      <el-col offset="1" span="22">
+   <simulation_table :symbol="symbol"></simulation_table>
+      </el-col>
     </el-row>
+    
     </div>
 </template>
+
+
 <style>
 .main{
   height: 100%;
@@ -46,44 +17,29 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-}
 
-.grid-content {
-  text-align: center;
-  font-weight: bold;
-
-}
-.grid-slogon-content {
-  text-align: center;
-  font-weight: bold;
-  margin-bottom:20px;
-  margin-top: 20px;
-}
-
-.regist_tip {
-  text-align: center;
-  font-weight: bold;
-  font-size: 10px;
-  margin-top:10px;
 }
 
 </style>
 <script>
+import simulation_table from '@/components/simulation_table'
+
 export default {
   name: 'simulation',
   data() {
     return {
       phone: '',
-      code:''
+      code:'',
+      symbol:'doge/usdt'
     }
+  },
+  components:{
+    simulation_table
   },
   mounted:{
 
   },
   methods:{
-    toRegist:function(){
-      this.$router.push({"name":"regist"});
-    },
     toIndex:function(){
       this.$router.push({"path":"/"});
     },
@@ -111,7 +67,6 @@ export default {
     
   }
 }
-console.log("hi");
 </script>
 
 <style>

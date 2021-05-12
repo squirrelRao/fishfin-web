@@ -4,7 +4,7 @@
         <el-col span="3"><el-image :src="require('@/assets/logo.png')" style="width:128px;cursor:Pointer"></el-image></el-col>
         <el-col span="5">
           <el-menu :default-active="activeIndex" mode="horizontal" @select="onSelect" active-text-color="#008080">
-            <el-menu-item index="1">关注自选</el-menu-item>
+            <el-menu-item index="1">自选关注</el-menu-item>
             <el-menu-item index="2">模拟交易</el-menu-item>
           </el-menu>
         </el-col>
