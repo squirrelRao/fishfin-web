@@ -1,14 +1,21 @@
 <template>
   <div id="head">
       <el-row align="middle" type="flex" :gutter="20">
-        <el-col span="3"><el-image :src="require('@/assets/logo.png')" style="width:128px;cursor:Pointer"></el-image></el-col>
-        <el-col span="5">
+        <el-col span=3><el-image :src="require('@/assets/logo.png')" style="width:128px;cursor:Pointer" @click="toIndex"></el-image></el-col>
+        <el-col span=5>
           <el-menu :default-active="activeIndex" mode="horizontal" @select="onSelect" active-text-color="#008080">
-            <el-menu-item index="1">自选关注</el-menu-item>
-            <el-menu-item index="2">模拟交易</el-menu-item>
+            <el-menu-item index="1">我的关注</el-menu-item>
+            <el-menu-item index="2">模拟记录</el-menu-item>
           </el-menu>
         </el-col>
-        <el-col span="3" :offset="13"><el-link type="info" style="font-size:18px;margin-left:30px" icon="el-icon-user">134****3248</el-link></el-col>
+        <el-col span=3 offset=13>
+          <el-dropdown size="medium" @command="clickDropdown">
+         <el-link type="info" style="font-size:16px;margin-left:30px" icon="el-icon-user" >134****3248</el-link>
+             <el-dropdown-menu slot="dropdown" >
+               <el-dropdown-item icon="el-icon-turn-off" command="logout" >退 出</el-dropdown-item>
+              </el-dropdown-menu>
+          </el-dropdown>
+          </el-col>
     </el-row>
     </div>
 </template>
@@ -35,6 +42,18 @@ export default {
       };
     },
   methods:{
+    clickDropdown:function(command){
+      if(command == "logout"){
+
+          this.$router.push({"path":"/"});
+
+      }
+      
+    },
+    logout:function(){
+
+        this.$router.push({"path":"/"});
+    },
     onSelect:function(index){
       this.activeIndex = index;
       console.log(this.activeIndex);
@@ -43,7 +62,6 @@ export default {
       }else{
         this.$router.push({"name":"simulation"});
       }
-      // this.$router.push({"name":"center"});
     },
     enter:function(){
       

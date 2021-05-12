@@ -1,8 +1,8 @@
 <template>
   <div id="index" class="main">
       <el-row align="middle" type="flex">
-        <el-col :span="6"></el-col>
-        <el-col :span="12">
+        <el-col span=6></el-col>
+        <el-col span=12>
               <el-row align="middle" type="flex" >
                 <el-col>
                   <div class="grid-content"><el-image :src="require('@/assets/logo.png')" style="width:210px;cursor:Pointer"></el-image></div>
@@ -11,7 +11,7 @@
                 </el-col>
               </el-row>
         </el-col>
-        <el-col :span="6"></el-col>
+        <el-col span=6></el-col>
     </el-row>
     </div>
 </template>

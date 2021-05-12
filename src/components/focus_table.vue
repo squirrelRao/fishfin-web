@@ -1,5 +1,6 @@
 <template>
   <div>
+       
     <el-table
     :data="data"
     stripe
@@ -11,7 +12,7 @@
       sortable
       width="160">
       <template slot-scope="scope">
-      <i class="el-icon-star-on" style="color:#f2b635;cursor:pointer" @click="removeFocus"></i>
+      <i class="el-icon-star-on" style="color:#f2b635;cursor:pointer" ></i>
       <span style="margin-left:0px;font-weight:bold;font-size:16px">{{ scope.row.currency }}</span>/<span style="font-size:14px;;">{{ scope.row.base_currency }}</span>
       </template>
     </el-table-column>
@@ -85,13 +86,13 @@
       width="260">
       <template slot-scope="scope">
         <el-tooltip content="策略设置" placement="bottom" effect="light">
-          <el-button  icon="el-icon-set-up" @click="handleEdit(scope.$index, scope.row)" circle></el-button>
+          <el-button  icon="el-icon-set-up" @click="showSetStrategy" circle ></el-button>
         </el-tooltip>
          <el-tooltip content="模拟交易" placement="bottom" effect="light">
-          <el-button icon="el-icon-cpu" @click="handleEdit(scope.$index, scope.row)" circle></el-button>
+          <el-button icon="el-icon-cpu" @click="showCreateSimulation(scope.$index, scope.row)" circle></el-button>
         </el-tooltip>
          <el-tooltip content="K线" placement="bottom" effect="light">
-          <el-button icon="el-icon-data-analysis" @click="handleEdit(scope.$index, scope.row)" circle></el-button>
+          <el-button icon="el-icon-data-analysis" @click="openKline(scope.$index, scope.row)" circle></el-button>
         </el-tooltip>
       </template>
     </el-table-column>
@@ -101,18 +102,112 @@
               layout="total, prev, pager, next"
               :total="totalnum"
               :page-size="page_size"
-              @current-change="handleCurrentChange"
             ></el-pagination>
-          </div>
+   </div>
+   <!-- set strategy params dialog -->
+  <el-dialog title="策略参数设置" width="30%" :visible.sync="strategySettingVisible" >
+    <el-row style="text-align:left;margin-bottom:20px">
+                <el-col>
+                 交易对: <span style="font-weight:bold">doge/usdt</span>
+                </el-col>
+      </el-row>
+       <el-row style="text-align:left;margin-bottom:20px">
+                <el-col>
+                 策  略: <span style="font-weight:bold">RSI</span>
+                </el-col>
+      </el-row>
+       <el-row style="text-align:left;margin-bottom:20px">
+                <el-col>
+                 交易频率: <span style="font-weight:bold">1min</span>
+                </el-col>
+      </el-row>
+      <el-row style="text-align:left;margin-bottom:20px">
+                <el-col >
+                买入RSI值: <el-input v-model="low_buy_rsi" placeholder="" style="width:200px"/>
+                </el-col>
+      </el-row>
+      <el-row style="text-align:left;margin-bottom:20px">
+                <el-col >
+                卖出RSI值: <el-input v-model="max_sale_rsi" placeholder="" style="width:200px"/>
+                </el-col>
+      </el-row>
+      <el-row style="text-align:center;">
+                <el-col >
+               <el-button>提 交</el-button>
+                </el-col>
+      </el-row>
+  </el-dialog>
+   <!-- create simulation dialog -->
+   <el-dialog title="创建模拟交易" width="30%" :visible.sync="createSimulationVisible" >
+    <el-row style="text-align:left;margin-bottom:20px">
+                <el-col>
+                 交易对: <span style="font-weight:bold">doge/usdt</span>
+                </el-col>
+      </el-row>
+       <el-row style="text-align:left;margin-bottom:20px">
+                <el-col>
+                 策  略: <span style="font-weight:bold">RSI</span>
+                </el-col>
+      </el-row>
+       <el-row style="text-align:left;margin-bottom:20px">
+                <el-col>
+                 交易频率: <span style="font-weight:bold">1min</span>
+                </el-col>
+      </el-row>
+      <el-row style="text-align:left;margin-bottom:20px">
+                <el-col >
+                初始额度: <el-input v-model="low_buy_rsi" placeholder="" style="width:200px"/> usdt
+                </el-col>
+      </el-row>
+       <el-row style="text-align:left;margin-bottom:20px">
+                <el-col >
+                交易限额: <el-input v-model="low_buy_rsi" placeholder="" style="width:200px"/> usdt
+                </el-col>
+      </el-row>
+      <el-row style="text-align:left;margin-bottom:20px">
+                <el-col >
+                买入RSI值: <el-input v-model="low_buy_rsi" placeholder="" style="width:200px"/>
+                </el-col>
+      </el-row>
+      <el-row style="text-align:left;margin-bottom:20px">
+                <el-col >
+                卖出RSI值: <el-input v-model="max_sale_rsi" placeholder="" style="width:200px"/>
+                </el-col>
+      </el-row>
+      <el-row style="text-align:center;">
+                <el-col >
+               <el-button>创 建</el-button>
+                </el-col>
+      </el-row>
+  </el-dialog>
   </div>
+
 </template>
+
 <script>
 export default {
   name: 'focus_table',
+  methods:{
+
+    showSetStrategy:function(){
+
+        this.strategySettingVisible = true;
+
+    },
+    showCreateSimulation:function(){
+
+      this.createSimulationVisible = true;
+    },
+    openKline:function(){
+        window.open("https://www.huobi.pe/zh-cn/exchange/btc_usdt/", '_blank');
+    }
+  },
   data () {
     return {
       totalnum:2,
       page_size:2,
+      strategySettingVisible:false,
+      createSimulationVisible:false,
       data: [{
           symbol: 'doge/usdt',
           currency:'doge',

@@ -1,6 +1,15 @@
 <template>
-  <div>
-    <el-table
+   <div id="simulation_detail" class="main">
+      <el-row class="tab_panes">
+        <el-col offset=1 span=22>
+          <div style="text-align:left;margin-top:20px;margin-bottom:20px;">
+            <el-page-header @back="goBack" content="模拟详情" ></el-page-header>
+          </div>
+        </el-col>
+      </el-row>
+    <el-row class="tab_panes">
+      <el-col offset=1 span=22>
+   <el-table
     :data="data"
     stripe
     style="width:100%"
@@ -66,41 +75,44 @@
       prop="datetime"
       label="创建时间"
       sortable
-      width="160">
-    </el-table-column>
-    <el-table-column
-      label="操作"
       width="">
-      <template slot-scope="scope">
-        <el-tooltip content="详情" placement="bottom" effect="light">
-          <el-button  icon="el-icon-postcard" @click="toDetail(scope.$index, scope.row)" circle></el-button>
-        </el-tooltip>
-        
-         <el-tooltip content="重算" placement="bottom" effect="light">
-          <el-button icon="el-icon-refresh-right" @click="handleEdit(scope.$index, scope.row)" circle></el-button>
-        </el-tooltip>
-         <el-tooltip content="删除" placement="bottom" effect="light">
-          <el-button icon="el-icon-delete" @click="handleEdit(scope.$index, scope.row)" circle></el-button>
-        </el-tooltip>
-      </template>
     </el-table-column>
+    
   </el-table>
-  <div style="text-align: center;margin-top:50px;">
-            <el-pagination
-              layout="total, prev, pager, next"
-              :total="totalnum"
-              :page-size="page_size"
-            ></el-pagination>
-          </div>
-  </div>
+      </el-col>
+    </el-row>
+    <el-row>
+            <el-col offset=1 span="22">
+              <div id="chart" style="margin-top:20px">
+                交易记录图
+              </div>
+            </el-col>
+    </el-row>
+    </div>
 </template>
+
+
+<style>
+.main{
+  height: 100%;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+}
+
+</style>
 <script>
+import simulation_table from '@/components/simulation_table'
+
 export default {
-  name: 'focus_table',
-  data () {
+  name: 'simulation_detail',
+  data() {
     return {
-      totalnum:2,
-      page_size:2,
+      phone: '',
+      code:'',
+      symbol:'doge/usdt',
       data: [{
           symbol: 'doge/usdt',
           currency:'doge',
@@ -119,22 +131,48 @@ export default {
         ]
     }
   },
-  methods:{
-
-      toDetail:function(index,row){
-
-          this.$router.push({"name":"simulation_detail"});
-
-      }
+  components:{
+    simulation_table
   },
-  props:{
-    data_type:"",
-    user_id:""
+  mounted:{
+
+  },
+  methods:{
+    goBack:function(){
+        this.$router.push({"name":"simulation"});
+    },
+    toSimulation:function(){
+      this.$router.push({"name":"simulation"});
+    },
+    toIndex:function(){
+      this.$router.push({"path":"/"});
+    },
+    hi(){
+        this.reqHttp()
+    },
+    reqHttp: function() {
+     
+      this.$api.http("/", "get", {}).then(res => {
+        console.log(res);
+        this.$message({
+          showClose: true,
+          message: res["data"],
+          type: "success"
+        });
+      }).catch(err => {
+        console.log(err);
+        this.$message({
+          showClose: true,
+          message: "",
+          type: "error"
+        });
+      });
+    }
+    
   }
 }
 </script>
 
 <style>
-
 
 </style>

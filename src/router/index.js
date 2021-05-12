@@ -5,6 +5,7 @@ import regist from '@/views/user/regist'
 import index from '@/views/index'
 import focus from '@/views/center/focus'
 import simulation from '@/views/center/simulation'
+import simulation_detail from '@/views/center/simulation_detail'
 import center_head from '@/views/center/center_head'
 
 Vue.use(Router)
@@ -47,6 +48,14 @@ const router =  new Router({
       components: {
         header:center_head,
         main:simulation
+      }
+    },
+    {
+      path: '/center/simulation_detail',
+      name: 'simulation_detail',
+      components: {
+        header:center_head,
+        main:simulation_detail
       }
     }
   ]

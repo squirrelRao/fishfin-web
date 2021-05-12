@@ -1,7 +1,9 @@
 <template>
+
   <div id="focus" class="main">
+    
     <el-row class="tab_panes">
-      <el-col offset="1" span="22">
+      <el-col offset=1 span=22>
       <el-tabs v-model="activeName" @tab-click="tabClick">
     <el-tab-pane label="1min" name="1min"><focus_table :data_type="data_type"></focus_table></el-tab-pane>
     <el-tab-pane label="5min" name="5min"><focus_table :data_type="data_type"></focus_table></el-tab-pane>
