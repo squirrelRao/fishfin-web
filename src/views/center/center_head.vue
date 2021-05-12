@@ -8,7 +8,14 @@
             <el-menu-item index="2">模拟记录</el-menu-item>
           </el-menu>
         </el-col>
-        <el-col span=3 offset=13>
+        <el-col span=7 offset=10>
+             
+         <el-autocomplete 
+  v-model="state"
+  :fetch-suggestions="querySearchAsync"
+  placeholder="搜索"
+  @select="handleSelect"><i slot="prefix" class="el-input__icon el-icon-search"></i></el-autocomplete>  
+  
           <el-dropdown size="medium" @command="clickDropdown">
          <el-link type="info" style="font-size:16px;margin-left:30px" icon="el-icon-user" >134****3248</el-link>
              <el-dropdown-menu slot="dropdown" >
@@ -20,6 +27,9 @@
     </div>
 </template>
 <style>
+.auto_input{
+  border-radius: 2px;
+}
 .el-menu.el-menu--horizontal {
   border-bottom-color:#ffffff!important;
   border-bottom: none;

@@ -1,7 +1,9 @@
 <template>
 
   <div id="focus" class="main">
-    
+    <el-row align="right">
+ 
+    </el-row>
     <el-row class="tab_panes">
       <el-col offset=1 span=22>
       <el-tabs v-model="activeName" @tab-click="tabClick">
@@ -11,7 +13,6 @@
     <el-tab-pane label="60min" name="60min"><focus_table :data_type="data_type"></focus_table></el-tab-pane>
       </el-tabs>
       </el-col>
-
     </el-row>
     
     </div>
@@ -27,7 +28,9 @@
   justify-content: space-around;
 
 }
-
+.auto_search{
+border-radius:2px;
+}
 .tab_panes{
 
    width: auto;
