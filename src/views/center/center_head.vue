@@ -11,9 +11,13 @@
         <el-col span=7 offset=10>
              
          <el-autocomplete 
-  v-model="state"
+         size="small"
+         clearable="true"
+         highlight-first-item="true"
+  v-model="query"
   :fetch-suggestions="querySearchAsync"
   placeholder="搜索"
+  popper-class="auto_input"
   @select="handleSelect"><i slot="prefix" class="el-input__icon el-icon-search"></i></el-autocomplete>  
   
           <el-dropdown size="medium" @command="clickDropdown">
@@ -27,9 +31,7 @@
     </div>
 </template>
 <style>
-.auto_input{
-  border-radius: 2px;
-}
+
 .el-menu.el-menu--horizontal {
   border-bottom-color:#ffffff!important;
   border-bottom: none;
@@ -49,6 +51,7 @@ export default {
    data() {
       return {
         activeIndex: '1',
+        query:''
       };
     },
   methods:{
