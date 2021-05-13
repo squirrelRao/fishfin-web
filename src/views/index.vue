@@ -6,7 +6,7 @@
               <el-row align="middle" type="flex" >
                 <el-col>
                   <div class="grid-content"><el-image :src="require('@/assets/logo.png')" style="width:210px;cursor:Pointer"></el-image></div>
-                  <div class="grid-slogon-content">感知水流 保持平衡</div>
+                  <div class="grid-slogon-content">{{welcome}}</div>
                   <div class="grid-content"><el-button round @click="enter">进入鱼鳍</el-button></div>
                 </el-col>
               </el-row>
@@ -43,7 +43,26 @@
 <script>
 export default {
   name: 'index',
+  data() {
+    return {
+      welcome: '感知水流，保持平衡'
+    }
+  },
+  mounted(){
+
+    this.showWelcome()
+
+  },
   methods:{
+    showWelcome:function(){
+        console.log(this.$store.getters.isLogin);
+        if(this.$store.getters.isLogin==false){
+          this.welcome = "感知水流，保持平衡";
+        }else{
+          this.welcome = "欢迎 "+this.$store.state.name+" ~";
+        }
+
+    },
     enter:function(){
       
       if(this.$store.getters.isLogin == false){
@@ -52,9 +71,10 @@ export default {
       }else{
         this.$message({
           showClose: true,
-          message: this.$store.state.name,
+          message: this.$store.state.name+" 欢迎进入鱼鳍！",
           type: "success"
         });
+        this.$router.push({"name":"center"});
       }
 
     },

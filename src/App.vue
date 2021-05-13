@@ -18,6 +18,24 @@ export default {
     toIndex:function(){
 
       this.$router.push({"name":"index"});
+    },
+    reqHttp: function() {
+     
+      this.$api.http("/", "get", {}).then(res => {
+        console.log(res);
+        this.$message({
+          showClose: true,
+          message: res["data"],
+          type: "success"
+        });
+      }).catch(err => {
+        console.log(err);
+        this.$message({
+          showClose: true,
+          message: "",
+          type: "error"
+        });
+      });
     }
   }
 }

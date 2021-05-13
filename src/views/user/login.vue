@@ -34,7 +34,7 @@
               <el-row align="middle"  type="flex" >
                  <el-col :span="10"></el-col>
                 <el-col :span="3">
-                  <div class="grid-slogon-content"><div class="grid-content" style="margin-top:20px"><el-button plain @click="enter">登 录</el-button></div>
+                  <div class="grid-slogon-content"><div class="grid-content" style="margin-top:20px"><el-button plain @click="login">登 录</el-button></div>
                   </div>
                 </el-col>
                  <el-col :span="2"><el-link type="info" class="regist_tip" @click="toRegist">没有账号?</el-link></el-col>
@@ -79,13 +79,68 @@ export default {
   data() {
     return {
       phone: '',
-      code:''
+      code:'123456'
     }
   },
   mounted:{
 
   },
   methods:{
+    valid:function(){
+
+      if(this.phone == ''){
+          this.$message({
+          showClose: true,
+          message: "手机号有误",
+          type: "error"
+        });
+        return false;
+      }
+
+      return true;
+
+    },
+    login:function(){
+
+      if(this.valid() == false){
+        return;
+      }
+
+      this.$api.http("/v1/login","post",{"phone":this.phone,"code":this.code}).then(res => {
+        console.log(res);
+      
+        if(res["rc"] == 0){
+        this.$message({
+                    showClose: true,
+                    message: "欢迎进入鱼鳍！",
+                    type: "success"
+           });
+          let expire = new Date().getTime() + 3688 * 24 * 10;
+          localStorage.setItem("user",JSON.stringify({"user_id":res["data"]["user_id"],"name":res["data"]["name"],"expire":expire}));
+          this.$store.commit("login_callback", res["data"]);
+          this.$router.push({"name":"center"});
+         
+
+        
+        }else{
+          this.$message({
+            showClose: true,
+            message: "登录失败:请检查手机号或验证码是否正确",
+            type: "error"
+          });
+        }
+
+      }).catch(err => {
+        console.log(err);
+        this.$message({
+          showClose: true,
+          message: "req failure",
+          type: "error"
+        });
+      });
+
+
+    },
     toRegist:function(){
       this.$router.push({"name":"regist"});
     },
@@ -94,29 +149,9 @@ export default {
     },
     enter(){
         this.$router.push({"name":"center"});
-    },
-    reqHttp: function() {
-     
-      this.$api.http("/", "get", {}).then(res => {
-        console.log(res);
-        this.$message({
-          showClose: true,
-          message: res["data"],
-          type: "success"
-        });
-      }).catch(err => {
-        console.log(err);
-        this.$message({
-          showClose: true,
-          message: "",
-          type: "error"
-        });
-      });
     }
-    
   }
 }
-console.log("hi");
 </script>
 
 <style>

@@ -5,6 +5,18 @@
 const path = require('path')
 
 module.exports = {
+  devServer:{
+    proxy:{
+        ["/v1"]:{
+        target:'http://lab.lakewater.cn',
+          changeOrigin:true,
+            pathRewrite: {
+                ['^' + "/v1"]: ''
+            }
+        }
+    }
+
+  },
   dev: {
 
     // Paths

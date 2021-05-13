@@ -1,7 +1,7 @@
 <template>
    <div id="simulation" class="main">
     <el-row class="tab_panes">
-      <el-col offset="1" span="22">
+      <el-col offset=1 span=22>
    <simulation_table :symbol="symbol"></simulation_table>
       </el-col>
     </el-row>

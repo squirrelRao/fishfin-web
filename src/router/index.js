@@ -7,6 +7,7 @@ import focus from '@/views/center/focus'
 import simulation from '@/views/center/simulation'
 import simulation_detail from '@/views/center/simulation_detail'
 import center_head from '@/views/center/center_head'
+import store from '@/store/index'
 
 Vue.use(Router)
 
@@ -59,6 +60,11 @@ const router =  new Router({
       }
     }
   ]
+})
+
+router.beforeEach((to, from, next) => {
+   store.commit("getUserState");
+   next();
 })
 
 
