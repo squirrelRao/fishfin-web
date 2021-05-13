@@ -54,14 +54,12 @@ export default {
   methods:{
     clickDropdown:function(command){
       if(command == "logout"){
-
-          this.$router.push({"path":"/"});
-
+          this.logout()
       }
       
     },
     logout:function(){
-
+        this.$store.commit("logout");
         this.$router.push({"path":"/"});
     },
     onSelect:function(index){

@@ -24,7 +24,12 @@ const store = new Vuex.Store({
       this.state.user_id = data["user_id"];
       this.state.name = data["name"];
       console.log(this.state);
-  }
+    },
+    logout(){
+      this.state.user_id = '';
+      this.state.name = '';
+      localStorage.removeItem("user");
+    }
     
   },
   getters:{
