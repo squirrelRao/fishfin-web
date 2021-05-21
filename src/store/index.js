@@ -36,6 +36,9 @@ const store = new Vuex.Store({
     isLogin(state){
       let res = state.user_id == '' ? false : true;
       return res
+    },
+    user_id(state){
+      return state.user_id;
     }
   },
   actions: {
