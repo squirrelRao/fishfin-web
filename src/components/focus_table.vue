@@ -10,7 +10,7 @@
     <el-table-column
       label="交易对"
       sortable
-      width="160">
+      width="130">
       <template slot-scope="scope">
       <i class="el-icon-star-on" style="color:#f2b635;cursor:pointer" ></i>
       <span style="margin-left:0px;font-weight:bold;font-size:16px">{{ scope.row.currency }}</span>/<span style="font-size:14px;;">{{ scope.row.base_currency }}</span>
@@ -35,14 +35,14 @@
       width="120">
     </el-table-column>
     <el-table-column
-      prop="power"
+      prop="vol"
       label="成交量"
       sortable
-      width="120">
+      width="160">
     </el-table-column>
     <el-table-column
       prop="advice"
-      label="建议策略"
+      label="建议"
       sortable
       width="120">
     </el-table-column>
@@ -54,15 +54,15 @@
     </el-table-column>
      <el-table-column
       prop="buy_rsi"
-      label="买入RSI"
+      label="RSI买"
       sortable
-      width="120">
+      width="100">
     </el-table-column>
      <el-table-column
       prop="sale_rsi"
-      label="卖出RSI"
+      label="RSI卖"
       sortable
-      width="120">
+      width="100">
     </el-table-column>
     <el-table-column
       prop="datetime"
@@ -83,7 +83,7 @@
     </el-table-column>
     <el-table-column
       label="操作"
-      width="260">
+      width="200">
       <template slot-scope="scope">
         <el-tooltip content="策略设置" placement="bottom" effect="light">
           <el-button  icon="el-icon-set-up" @click="showSetStrategy" circle ></el-button>
@@ -156,22 +156,22 @@
       </el-row>
       <el-row style="text-align:left;margin-bottom:20px">
                 <el-col >
-                初始额度: <el-input v-model="low_buy_rsi" placeholder="" style="width:200px"/> usdt
+                初始额度: <el-input v-model="init_amount" placeholder="" style="width:200px"/> usdt
                 </el-col>
       </el-row>
        <el-row style="text-align:left;margin-bottom:20px">
                 <el-col >
-                交易限额: <el-input v-model="low_buy_rsi" placeholder="" style="width:200px"/> usdt
+                交易限额: <el-input v-model="max_trade_amount" placeholder="" style="width:200px"/> usdt
                 </el-col>
       </el-row>
       <el-row style="text-align:left;margin-bottom:20px">
                 <el-col >
-                买入RSI值: <el-input v-model="low_buy_rsi" placeholder="" style="width:200px"/>
+                买入RSI: <el-input v-model="low_buy_rsi" placeholder="" style="width:200px"/>
                 </el-col>
       </el-row>
       <el-row style="text-align:left;margin-bottom:20px">
                 <el-col >
-                卖出RSI值: <el-input v-model="max_sale_rsi" placeholder="" style="width:200px"/>
+                卖出RSI: <el-input v-model="max_sale_rsi" placeholder="" style="width:200px"/>
                 </el-col>
       </el-row>
       <el-row style="text-align:center;">
@@ -187,6 +187,9 @@
 <script>
 export default {
   name: 'focus_table',
+  mounted(){
+     this.queryData();
+  },
   methods:{
 
     showSetStrategy:function(){
@@ -200,43 +203,64 @@ export default {
     },
     openKline:function(){
         window.open("https://www.huobi.pe/zh-cn/exchange/btc_usdt/", '_blank');
+    },
+    queryData:function(){
+      console.log(this.data_type);
+
+       this.$api.http("/v1/focus/data", "post", {"user_id":this.$store.getters.user_id,"period":this.data_type,"page_size":this.page_size,"page_no":this.page_no}).then(res => {
+        console.log(res);
+        this.data= [];
+        if(res["rc"] == 0){
+          this.totalnum = res["count"];
+          var datas = res["data"];
+          for(var i = 0; i < datas.length;i++){
+            var _data = datas[i];
+            var item = {}
+            var base_currency = "usdt";
+            item["symbol"] = _data["symbol"];
+            item["currency"] = _data["symbol"].replace(base_currency,"");
+            item["base_currency"] = base_currency;
+            item["close"] = _data["kline"]["close"];
+            item["high"] = _data["kline"]["high"];
+            item["low"] = _data["kline"]["low"];
+            item["vol"] = _data["kline"]["vol"];
+            if(_data["signal"] != null){
+              item["advice"] = _data["signal"]["advice"];
+              item["rsi"] = _data["signal"]["rsi"];
+            }else{
+              item["advice"] = "暂无";
+              item["rsi"] = "-";
+            }
+            item["buy_rsi"] = _data["strategy"]["min_buy_rsi"];
+            item["sale_rsi"] = _data["strategy"]["max_sell_rsi"];
+            item["datetime"] = _data["kline"]["ktime_str"];
+
+            this.data.push(item);
+
+          }
+        }
+      }).catch(err => {
+        console.log(err);
+        this.$message({
+          showClose: true,
+          message: "",
+          type: "error"
+        });
+      });
+
     }
   },
   data () {
     return {
-      totalnum:2,
-      page_size:2,
+      totalnum:0,
+      page_size:10,
       strategySettingVisible:false,
       createSimulationVisible:false,
-      data: [{
-          symbol: 'doge/usdt',
-          currency:'doge',
-          base_currency:'usdt',
-          close: '1.32',
-          high: '1.34',
-          low: '1.21',
-          power: '1000',
-          advice: '持有',
-          rsi:'2.1203',
-          buy_rsi:'1.2',
-          sale_rsi:'3.41',
-          datetime:'2021-05-12 09:30:11'
-        },
-        {
-         symbol: 'eos/usdt',
-          currency:'eos',
-          base_currency:'usdt',
-          close: '1.02',
-          high: '1.14',
-          low: '0.21',
-          power: '41000',
-          advice: '持有',
-          rsi:'1.1203',
-          buy_rsi:'0.2',
-          sale_rsi:'5.41',
-          datetime:'2021-05-12 09:31:11'
-        }
-        ]
+      data: [],
+      low_buy_rsi:0,
+      max_sale_rsi:0,
+      init_amount:5000,
+      max_trade_amount:1000
     }
   },
   props:{
