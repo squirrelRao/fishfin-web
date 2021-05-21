@@ -18,7 +18,7 @@
   :fetch-suggestions="querySearchAsync"
   placeholder="搜索并加入关注"
   popper-class="auto_input"
-  @select="handleSelect"><i slot="prefix" class="el-input__icon el-icon-search">  </i>
+  @select="queryHandleSelect"><i slot="prefix" class="el-input__icon el-icon-search">  </i>
     <template slot-scope="{ item }">
       <div >
       <i class="el-icon-star-off" v-if="item.value.is_watch == 0" ></i><i class="el-icon-star-on" style="color:#f2b635" v-if="item.value.is_watch == 1" ></i><span style="margin-left:10px">{{item.value.currency}}</span>
@@ -61,6 +61,42 @@ export default {
       };
     },
   methods:{
+    queryHandleSelect(item) {
+
+        console.log(item);
+        if(item.value.is_watch == 1){
+              this.$message({
+              showClose: true,
+              message: item.value.currency+"已在关注列表里",
+              type: "success"
+            });
+        }else{
+        
+        this.$api.http("/v1/symbol/watch/add", "post", {"currency":item.value.currency,"quote":"usdt","user_id":this.$store.getters.user_id}).then(res => {
+        console.log(res);
+        if(res["rc"]==0){
+           this.$message({
+          showClose: true,
+          message: item.value.currency+"已添加到关注列表",
+          type: "success"
+        });
+        }
+
+      }).catch(err => {
+        console.log(err);
+        this.$message({
+          showClose: true,
+          message: "查询失败",
+          type: "error"
+        });
+      });
+
+
+
+        }
+        this.state='';
+    
+    },
     querySearchAsync:function(queryString, cb){
       
       this.query_symbol = [];
