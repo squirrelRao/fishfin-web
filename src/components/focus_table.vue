@@ -188,10 +188,13 @@
 export default {
   name: 'focus_table',
   mounted(){
-     this.queryData();
   },
   methods:{
-
+    updateData:function(data,total_count,page_size,page_no){
+      this.data = data;
+      this.page_size = page_size;
+      this.totalnum = total_count;
+    },
     showSetStrategy:function(){
 
         this.strategySettingVisible = true;
@@ -203,51 +206,6 @@ export default {
     },
     openKline:function(){
         window.open("https://www.huobi.pe/zh-cn/exchange/btc_usdt/", '_blank');
-    },
-    queryData:function(){
-      console.log(this.data_type);
-
-       this.$api.http("/v1/focus/data", "post", {"user_id":this.$store.getters.user_id,"period":this.data_type,"page_size":this.page_size,"page_no":this.page_no}).then(res => {
-        console.log(res);
-        this.data= [];
-        if(res["rc"] == 0){
-          this.totalnum = res["count"];
-          var datas = res["data"];
-          for(var i = 0; i < datas.length;i++){
-            var _data = datas[i];
-            var item = {}
-            var base_currency = "usdt";
-            item["symbol"] = _data["symbol"];
-            item["currency"] = _data["symbol"].replace(base_currency,"");
-            item["base_currency"] = base_currency;
-            item["close"] = _data["kline"]["close"];
-            item["high"] = _data["kline"]["high"];
-            item["low"] = _data["kline"]["low"];
-            item["vol"] = _data["kline"]["vol"];
-            if(_data["signal"] != null){
-              item["advice"] = _data["signal"]["advice"];
-              item["rsi"] = _data["signal"]["rsi"];
-            }else{
-              item["advice"] = "暂无";
-              item["rsi"] = "-";
-            }
-            item["buy_rsi"] = _data["strategy"]["min_buy_rsi"];
-            item["sale_rsi"] = _data["strategy"]["max_sell_rsi"];
-            item["datetime"] = _data["kline"]["ktime_str"];
-
-            this.data.push(item);
-
-          }
-        }
-      }).catch(err => {
-        console.log(err);
-        this.$message({
-          showClose: true,
-          message: "",
-          type: "error"
-        });
-      });
-
     }
   },
   data () {

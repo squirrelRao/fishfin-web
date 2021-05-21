@@ -120,6 +120,9 @@ export default {
 
       return cb(this.query_symbol);
     },
+    toIndex:function(){
+      this.$router.push({"path":"/"});
+    },
     clickDropdown:function(command){
       if(command == "logout"){
           this.logout()
