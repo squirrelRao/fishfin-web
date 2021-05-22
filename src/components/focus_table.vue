@@ -12,7 +12,7 @@
       sortable
       width="130">
       <template slot-scope="scope">
-      <i class="el-icon-star-on" style="color:#f2b635;cursor:pointer" ></i>
+      <i class="el-icon-star-on" style="color:#f2b635;cursor:pointer" @click="removeFocus(scope.row)"></i>
       <span style="margin-left:0px;font-weight:bold;font-size:16px">{{ scope.row.currency }}</span>/<span style="font-size:14px;;">{{ scope.row.base_currency }}</span>
       </template>
     </el-table-column>
@@ -75,8 +75,11 @@
       width="100">
        <template slot-scope="scope">
                 <el-switch
-            v-model="scope.row.remind"
+            v-model="scope.row.is_signal"
             active-color="#13ce66"
+            :active-value=1
+            :inactive-value=0
+            @change="updateSignal(scope.row)"
             >
           </el-switch>
       </template>
@@ -190,6 +193,55 @@ export default {
   mounted(){
   },
   methods:{
+    removeFocus:function(row){
+
+       let action = 1;
+       if(row.is_signal == 1){
+         action = 0;
+       }
+       this.$api.http("/v1/symbol/watch/remove", "post", {"user_id":this.$store.getters.user_id,"symbol":row.symbol}).then(res => {
+        
+        if(res["rc"] == 0){
+          this.$message({
+          showClose: true,
+          message: "操作成功！",
+          type: "success"
+        });
+        }
+       
+      }).catch(err => {
+        console.log(err);
+        this.$message({
+          showClose: true,
+          message: "操作失败",
+          type: "error"
+        });
+      });
+
+    },
+    updateSignal:function(row){
+      
+       let action = row.is_signal;
+       this.$api.http("/v1/symbol/watch/signal", "post", {"user_id":this.$store.getters.user_id,"symbol":row.symbol,"action":action}).then(res => {
+        
+        if(res["rc"] == 0){
+
+          this.$message({
+          showClose: true,
+          message: "操作成功！",
+          type: "success"
+        });
+        }
+       
+      }).catch(err => {
+        console.log(err);
+        this.$message({
+          showClose: true,
+          message: "操作失败",
+          type: "error"
+        });
+      });
+    },
     updateData:function(data,total_count,page_size,page_no){
       this.data = data;
       this.page_size = page_size;

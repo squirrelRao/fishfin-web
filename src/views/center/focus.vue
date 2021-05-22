@@ -97,6 +97,7 @@ export default {
             item["buy_rsi"] = _data["strategy"]["min_buy_rsi"];
             item["sale_rsi"] = _data["strategy"]["max_sell_rsi"];
             item["datetime"] = _data["kline"]["ktime_str"];
+            item["is_signal"] = _data["watch"]["open_signal"];
 
             this.data.push(item);
 
