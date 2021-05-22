@@ -85,8 +85,8 @@
       </template>
     </el-table-column>
     <el-table-column
-      label="操作"
-      width="200">
+      label=""
+      width="">
       <template slot-scope="scope">
         <el-tooltip content="策略设置" placement="bottom" effect="light">
           <el-button  icon="el-icon-set-up" @click="showSetStrategy(scope.row)" circle ></el-button>
