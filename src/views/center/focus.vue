@@ -8,9 +8,9 @@
       <el-col offset=1 span=22>
       <el-tabs v-model="activeName" @tab-click="tabClick">
     <el-tab-pane label="1min" name="1min"><focus_table1 ref="focus_table1" @refresh="refresh" @pageChange="pageChange" /></el-tab-pane>
-    <el-tab-pane label="5min" name="5min"><focus_table2 ref="focus_table2" @refresh="refresh" /></el-tab-pane>
-    <el-tab-pane label="30min" name="30min"><focus_table3 ref="focus_table3" @refresh="refresh" /></el-tab-pane>
-    <el-tab-pane label="60min" name="60min"><focus_table4 ref="focus_table4" @refresh="refresh" /></el-tab-pane>
+    <el-tab-pane label="5min" name="5min"><focus_table2 ref="focus_table2" @refresh="refresh" @pageChange="pageChange" /></el-tab-pane>
+    <el-tab-pane label="30min" name="30min"><focus_table3 ref="focus_table3" @refresh="refresh" @pageChange="pageChange"/></el-tab-pane>
+    <el-tab-pane label="60min" name="60min"><focus_table4 ref="focus_table4" @refresh="refresh" @pageChange="pageChange"/></el-tab-pane>
       </el-tabs>
       </el-col>
     </el-row>
