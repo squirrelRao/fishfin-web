@@ -7,6 +7,7 @@ import focus from '@/views/center/focus'
 import simulation from '@/views/center/simulation'
 import simulation_detail from '@/views/center/simulation_detail'
 import center_head from '@/views/center/center_head'
+import footer from '@/views/footer'
 import store from '@/store/index'
 
 Vue.use(Router)
@@ -18,21 +19,26 @@ const router =  new Router({
       path: '/',
       name: 'index',
       components: {
-        main:index
+        main:index,
+        footer:footer
       }
     },
     {
       path: '/login',
       name: 'login',
       components: {
-        main:login
+        main:login,
+        footer:footer
+
       }
     },
     {
       path: '/regist',
       name: 'regist',
       components: {
-        main:regist
+        main:regist,
+        footer:footer
+
       }
     },
     {
@@ -40,7 +46,9 @@ const router =  new Router({
       name: 'center',
       components: {
         header:center_head,
-        main:focus
+        main:focus,
+        footer:footer
+
       }
     },
     {
@@ -48,7 +56,9 @@ const router =  new Router({
       name: 'simulation',
       components: {
         header:center_head,
-        main:simulation
+        main:simulation,
+        footer:footer
+
       }
     },
     {
@@ -56,7 +66,9 @@ const router =  new Router({
       name: 'simulation_detail',
       components: {
         header:center_head,
-        main:simulation_detail
+        main:simulation_detail,
+        footer:footer
+
       }
     }
   ]

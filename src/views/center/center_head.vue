@@ -29,7 +29,6 @@
           <el-link type="info" style="font-size:16px;margin-left:30px" icon="el-icon-user" >134****3248</el-link>
               <el-dropdown-menu slot="dropdown" >
                 <el-dropdown-item icon="el-icon-turn-off" command="logout" >退 出</el-dropdown-item>
-                <el-dropdown-item icon="el-icon-turn-off" command="about" >关 于</el-dropdown-item>
                 </el-dropdown-menu>
           </el-dropdown>
           </el-col>
