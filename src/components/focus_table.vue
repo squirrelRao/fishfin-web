@@ -89,7 +89,7 @@
       width="200">
       <template slot-scope="scope">
         <el-tooltip content="策略设置" placement="bottom" effect="light">
-          <el-button  icon="el-icon-set-up" @click="showSetStrategy" circle ></el-button>
+          <el-button  icon="el-icon-set-up" @click="showSetStrategy(scope.row)" circle ></el-button>
         </el-tooltip>
          <el-tooltip content="模拟交易" placement="bottom" effect="light">
           <el-button icon="el-icon-cpu" @click="showCreateSimulation(scope.$index, scope.row)" circle></el-button>
@@ -105,23 +105,20 @@
               layout="total, prev, pager, next"
               :total="totalnum"
               :page-size="page_size"
+              :current-page="page_no"
+              @current-change="pageChange"
             ></el-pagination>
    </div>
    <!-- set strategy params dialog -->
   <el-dialog title="策略参数设置" width="30%" :visible.sync="strategySettingVisible" >
     <el-row style="text-align:left;margin-bottom:20px">
                 <el-col>
-                 交易对: <span style="font-weight:bold">doge/usdt</span>
+                 交易对: <span style="font-weight:bold">{{symbol}}</span>
                 </el-col>
       </el-row>
        <el-row style="text-align:left;margin-bottom:20px">
                 <el-col>
                  策  略: <span style="font-weight:bold">RSI</span>
-                </el-col>
-      </el-row>
-       <el-row style="text-align:left;margin-bottom:20px">
-                <el-col>
-                 交易频率: <span style="font-weight:bold">1min</span>
                 </el-col>
       </el-row>
       <el-row style="text-align:left;margin-bottom:20px">
@@ -136,7 +133,7 @@
       </el-row>
       <el-row style="text-align:center;">
                 <el-col >
-               <el-button>提 交</el-button>
+               <el-button @click="updateStrategy">提 交</el-button>
                 </el-col>
       </el-row>
   </el-dialog>
@@ -193,6 +190,10 @@ export default {
   mounted(){
   },
   methods:{
+    pageChange:function(cur_page){
+      console.log(cur_page)
+        this.$emit("pageChange",cur_page);
+    },
     removeFocus:function(row){
 
        let action = 1;
@@ -204,9 +205,10 @@ export default {
         if(res["rc"] == 0){
           this.$message({
           showClose: true,
-          message: "操作成功！",
+          message: "已取消关注"+row.symbol,
           type: "success"
         });
+        this.$emit("refresh");
         }
        
       }).catch(err => {
@@ -231,6 +233,7 @@ export default {
           message: "操作成功！",
           type: "success"
         });
+        
         }
        
       }).catch(err => {
@@ -247,14 +250,44 @@ export default {
       this.page_size = page_size;
       this.totalnum = total_count;
     },
-    showSetStrategy:function(){
+    showSetStrategy:function(row){
 
         this.strategySettingVisible = true;
+        this.low_buy_rsi = row.buy_rsi;
+        this.max_sale_rsi = row.sale_rsi
+        this.symbol = row.symbol.replace("usdt","/usdt");
+
+    },
+    updateStrategy:function(){
+
+      this.$api.http("/v1/strategy/update", "post", {"user_id":this.$store.getters.user_id,"symbol":this.symbol.replace("/",""),"strategy":"rsi","min_buy_rsi":this.low_buy_rsi,"max_sell_rsi":this.max_sale_rsi}).then(res => {
+        
+        if(res["rc"] == 0){
+
+          this.$message({
+          showClose: true,
+          message: "策略更新成功，将在"+this.symbol+"所有监测频率上生效！",
+          type: "success"
+        });
+        this.strategySettingVisible = false;
+        this.$emit("refresh");
+        }
+       
+      }).catch(err => {
+        console.log(err);
+        this.$message({
+          showClose: true,
+          message: "操作失败",
+          type: "error"
+        });
+      });
 
     },
     showCreateSimulation:function(){
-
-      this.createSimulationVisible = true;
+      this.$alert('暂未开放', '消息', {
+          confirmButtonText: '确定'
+        });
+      // this.createSimulationVisible = true;
     },
     openKline:function(){
         window.open("https://www.huobi.pe/zh-cn/exchange/btc_usdt/", '_blank');
@@ -269,6 +302,8 @@ export default {
       data: [],
       low_buy_rsi:0,
       max_sale_rsi:0,
+      symbol:"",
+      period:"",
       init_amount:5000,
       max_trade_amount:1000
     }

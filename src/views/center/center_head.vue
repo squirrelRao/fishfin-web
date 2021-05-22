@@ -73,15 +73,17 @@ export default {
         }else{
         
         this.$api.http("/v1/symbol/watch/add", "post", {"currency":item.value.currency,"quote":"usdt","user_id":this.$store.getters.user_id}).then(res => {
-        console.log(res);
         if(res["rc"]==0){
-           this.$message({
-          showClose: true,
-          message: item.value.currency+"已添加到关注列表",
-          type: "success"
+          this.$alert(item.value.currency+"已添加到关注列表！", '操作成功', {
+          confirmButtonText: '确定',
+          callback: action => {
+            window.location.reload();
+          }
         });
-        }
 
+
+        }
+        
       }).catch(err => {
         console.log(err);
         this.$message({
@@ -139,7 +141,14 @@ export default {
       if(this.activeIndex == "1"){
         this.$router.push({"name":"center"});
       }else{
-        this.$router.push({"name":"simulation"});
+        this.$alert('暂未开放', '消息', {
+          confirmButtonText: '确定',
+          callback: action => {
+            this.activeIndex = "1";
+            this.$router.push({"name":"center"});
+          }
+        });
+        // this.$router.push({"name":"simulation"});
       }
     },
     enter:function(){
