@@ -9,7 +9,7 @@
     <el-table-column
       label="交易对"
       sortable
-      width="160">
+      width="130">
       <template slot-scope="scope">
       <span style="margin-left:0px;font-weight:bold;font-size:16px">{{ scope.row.currency }}</span>/<span style="font-size:14px;;">{{ scope.row.base_currency }}</span>
       </template>
@@ -18,37 +18,37 @@
       prop="strategy"
       label="交易策略"
       sortable
-      width="120">
+      width="100">
     </el-table-column>
    <el-table-column
       prop="freq"
       label="交易频率"
       sortable
-      width="120">
+      width="100">
     </el-table-column>
     <el-table-column
       prop="starttime"
       label="开始时间"
       sortable
-      width="160">
+      width="100">
     </el-table-column>
     <el-table-column
       prop="endtime"
       label="结束时间"
       sortable
-      width="160">
+      width="100">
     </el-table-column>
     <el-table-column
       prop="start_amount"
       label="初始金额"
       sortable
-      width="120">
+      width="130">
     </el-table-column>
      <el-table-column
       prop="max_exchange_amount"
       label="最大交易额"
       sortable
-      width="120">
+      width="130">
     </el-table-column>
      <el-table-column
       prop="ror"
@@ -66,22 +66,15 @@
       prop="datetime"
       label="创建时间"
       sortable
-      width="160">
+      width="100">
     </el-table-column>
     <el-table-column
       label="操作"
-      width="">
+      >
       <template slot-scope="scope">
-        <el-tooltip content="详情" placement="bottom" effect="light">
-          <el-button  icon="el-icon-postcard" @click="toDetail(scope.$index, scope.row)" circle></el-button>
-        </el-tooltip>
-        
-         <el-tooltip content="重算" placement="bottom" effect="light">
-          <el-button icon="el-icon-refresh-right" @click="handleEdit(scope.$index, scope.row)" circle></el-button>
-        </el-tooltip>
-         <el-tooltip content="删除" placement="bottom" effect="light">
-          <el-button icon="el-icon-delete" @click="handleEdit(scope.$index, scope.row)" circle></el-button>
-        </el-tooltip>
+          <el-link type="primary" @click="toDetail(scope.$index, scope.row)" >详情</el-link>
+          <el-link type="primary" @click="handleEdit(scope.$index, scope.row)" >重算</el-link>
+          <el-link type="primary" @click="handleEdit(scope.$index, scope.row)" >删除</el-link>
       </template>
     </el-table-column>
   </el-table>

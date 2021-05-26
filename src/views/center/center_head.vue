@@ -143,14 +143,14 @@ export default {
       if(this.activeIndex == "1"){
         this.$router.push({"name":"center"});
       }else{
-        this.$alert('暂未开放', '消息', {
-          confirmButtonText: '确定',
-          callback: action => {
-            this.activeIndex = "1";
-            this.$router.push({"name":"center"});
-          }
-        });
-        // this.$router.push({"name":"simulation"});
+        // this.$alert('暂未开放', '消息', {
+        //   confirmButtonText: '确定',
+        //   callback: action => {
+        //     this.activeIndex = "1";
+        //     this.$router.push({"name":"center"});
+        //   }
+        // });
+        this.$router.push({"name":"simulation"});
       }
     },
     enter:function(){
