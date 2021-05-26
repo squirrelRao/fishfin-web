@@ -53,7 +53,7 @@ export default {
 
 <style>
 #foot{
-    position: fixed;
+    position: relative;
     bottom: 0;
     height: 60px;
     text-align: center;

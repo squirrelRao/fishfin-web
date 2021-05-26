@@ -1,5 +1,5 @@
 <template>
-  <div id="index" class="main">
+  <div id="index" class="index_main">
       <el-row align="middle" type="flex">
         <el-col span=1></el-col>
         <el-col span=22>
@@ -16,8 +16,8 @@
     </div>
 </template>
 <style>
-.main{
-  height: 100%;
+.index_main{
+  height: 400px;
   width: 100%;
   overflow: auto;
   display: flex;
@@ -25,6 +25,8 @@
   justify-content: space-around;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom:180px;
+
 }
 
 .grid-content {

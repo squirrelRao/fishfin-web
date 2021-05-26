@@ -27,18 +27,14 @@ const router =  new Router({
       path: '/login',
       name: 'login',
       components: {
-        main:login,
-        footer:footer
-
+        main:login
       }
     },
     {
       path: '/regist',
       name: 'regist',
       components: {
-        main:regist,
-        footer:footer
-
+        main:regist
       }
     },
     {

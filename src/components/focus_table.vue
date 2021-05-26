@@ -101,7 +101,7 @@
       </template>
     </el-table-column>
   </el-table>
-  <div style="text-align: center;margin-top:50px;">
+  <div style="text-align: center;margin-top:0px;">
             <el-pagination
               layout="total, prev, pager, next"
               :total="totalnum"
