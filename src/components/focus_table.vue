@@ -20,19 +20,19 @@
       prop="close"
       label="最新价"
       sortable
-      width="120">
+      width="100">
     </el-table-column>
    <el-table-column
       prop="high"
       label="最高价"
       sortable
-      width="120">
+      width="100">
     </el-table-column>
     <el-table-column
       prop="low"
       label="最低价"
       sortable
-      width="120">
+      width="100">
     </el-table-column>
     <el-table-column
       prop="vol"
@@ -44,35 +44,35 @@
       prop="advice"
       label="建议"
       sortable
-      width="120">
+      width="100">
     </el-table-column>
      <el-table-column
       prop="rsi"
       label="RSI"
       sortable
-      width="120">
+      width="100">
     </el-table-column>
      <el-table-column
       prop="buy_rsi"
       label="RSI买"
       sortable
-      width="100">
+      width="90">
     </el-table-column>
      <el-table-column
       prop="sale_rsi"
       label="RSI卖"
       sortable
-      width="100">
+      width="90">
     </el-table-column>
     <el-table-column
       prop="datetime"
       label="时刻"
       sortable
-      width="160">
+      width="100">
     </el-table-column>
     <el-table-column
       label="提醒"
-      width="100">
+      width="80">
        <template slot-scope="scope">
                 <el-switch
             v-model="scope.row.is_signal"
@@ -84,19 +84,20 @@
           </el-switch>
       </template>
     </el-table-column>
-    <el-table-column
-      label=""
-      width="">
+    <el-table-column>
       <template slot-scope="scope">
-        <el-tooltip content="策略设置" placement="bottom" effect="light">
-          <el-button  icon="el-icon-set-up" @click="showSetStrategy(scope.row)" circle ></el-button>
-        </el-tooltip>
-         <el-tooltip content="模拟交易" placement="bottom" effect="light">
-          <el-button icon="el-icon-cpu" @click="showCreateSimulation(scope.$index, scope.row)" circle></el-button>
-        </el-tooltip>
-         <el-tooltip content="K线" placement="bottom" effect="light">
-          <el-button icon="el-icon-data-analysis" @click="openKline(scope.$index, scope.row)" circle></el-button>
-        </el-tooltip>
+      <el-row>
+                <el-link type="primary" size="small" @click="showSetStrategy(scope.row)"  >策略设置</el-link>
+
+      </el-row>
+      <el-row>
+                <el-link size="small" type="primary" @click="showCreateSimulation(scope.$index, scope.row)" >交易模拟</el-link>
+
+      </el-row>
+      <el-row>
+          <el-link  type="primary"  size="small" @click="openKline(scope.$index, scope.row)" >K线</el-link>
+
+      </el-row>
       </template>
     </el-table-column>
   </el-table>

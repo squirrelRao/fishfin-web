@@ -9,35 +9,35 @@
                 </el-col>
               </el-row>
               <el-row align="middle" type="flex" >
-               <el-col :span="8"></el-col>
-                <el-col :span="8">
+               <el-col span="8"></el-col>
+                <el-col span="10">
                   <div class="grid-slogon-content">登 录
                   </div>
                 </el-col>
                  <el-col :span="2"></el-col>
               </el-row>
               <el-row align="middle"  type="flex" >
-                <el-col :span="8"></el-col>
-                <el-col :span="8">
+                <el-col span="8"></el-col>
+                <el-col span="10">
                   <div class="grid-slogon-content">手机号: <el-input v-model="phone" placeholder="请输入手机号" style="width:200px"/></div>
                 </el-col>
                 <el-col :span="2"></el-col>
               </el-row>
                <el-row align="middle"  type="flex" >
-                 <el-col :span="8"></el-col>
-                <el-col :span="8">
+                 <el-col span="8"></el-col>
+                <el-col span="10">
                   <div class="grid-slogon-content">验证码: <el-input v-model="code" placeholder="请输入验证码" style="width:200px"/>
                   </div>
                 </el-col>
-                 <el-col :span="2"><el-link type="primary">获取验证码</el-link></el-col>
+                 <el-col span="3"><el-link type="primary">获取验证码</el-link></el-col>
               </el-row>
               <el-row align="middle"  type="flex" >
-                 <el-col :span="10"></el-col>
-                <el-col :span="3">
+                 <el-col span="10"></el-col>
+                <el-col span="6">
                   <div class="grid-slogon-content"><div class="grid-content" style="margin-top:20px"><el-button plain @click="login">登 录</el-button></div>
                   </div>
                 </el-col>
-                 <el-col :span="2"><el-link type="info" class="regist_tip" @click="toRegist">没有账号?</el-link></el-col>
+                 <el-col span="2"><el-link type="info" class="regist_tip" @click="toRegist">没有账号?</el-link></el-col>
               </el-row>
         </el-col>
         <el-col :span="6"></el-col>

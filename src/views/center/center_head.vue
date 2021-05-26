@@ -2,14 +2,13 @@
   <div id="head">
       <el-row align="middle" type="flex" :gutter="20">
         <el-col span=3><el-image :src="require('@/assets/logo.png')" style="width:128px;cursor:Pointer" @click="toIndex"></el-image></el-col>
-        <el-col span=5>
+        <el-col span=4>
           <el-menu :default-active="activeIndex" mode="horizontal" @select="onSelect" active-text-color="#008080">
             <el-menu-item index="1">我的关注</el-menu-item>
             <el-menu-item index="2">模拟记录</el-menu-item>
           </el-menu>
         </el-col>
-        <el-col span=10 offset=10>
-             
+        <el-col span=6 offset=10>
          <el-autocomplete 
          size="small"
          clearable="true"
@@ -18,15 +17,15 @@
   :fetch-suggestions="querySearchAsync"
   placeholder="搜索并加入关注"
   popper-class="auto_input"
-  @select="queryHandleSelect"><i slot="prefix" class="el-input__icon el-icon-search">  </i>
+  @select="queryHandleSelect" style="width:160px"><i slot="prefix" class="el-input__icon el-icon-search">  </i>
     <template slot-scope="{ item }">
-      <div >
+      <div>
       <i class="el-icon-star-off" v-if="item.value.is_watch == 0" ></i><i class="el-icon-star-on" style="color:#f2b635" v-if="item.value.is_watch == 1" ></i><span style="margin-left:10px">{{item.value.currency}}</span>
       </div>
     </template>
   </el-autocomplete>  
           <el-dropdown size="medium" @command="clickDropdown">
-          <el-link type="info" style="font-size:16px;margin-left:30px" icon="el-icon-user" >134****3248</el-link>
+          <el-link type="info" style="font-size:16px;margin-left:0px" icon="el-icon-user" >134****3248</el-link>
               <el-dropdown-menu slot="dropdown" >
                 <el-dropdown-item icon="el-icon-turn-off" command="logout" >退 出</el-dropdown-item>
                 </el-dropdown-menu>
