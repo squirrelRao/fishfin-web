@@ -19,7 +19,7 @@
               <el-row align="middle"  type="flex" >
                 <el-col span="8"></el-col>
                 <el-col span="10">
-                  <div class="grid-slogon-content">手机号: <el-input v-model="phone" placeholder="请输入手机号" style="width:200px"/></div>
+                  <div class="grid-slogon-content">邮 箱: <el-input v-model="mail" placeholder="请输入邮箱" style="width:200px"/></div>
                 </el-col>
                 <el-col :span="2"></el-col>
               </el-row>
@@ -29,7 +29,7 @@
                   <div class="grid-slogon-content">验证码: <el-input v-model="code" placeholder="请输入验证码" style="width:200px"/>
                   </div>
                 </el-col>
-                 <el-col span="3"><el-link type="primary">获取验证码</el-link></el-col>
+                 <el-col span="3"><el-link type="primary" @click="getLoginCode">获取验证码</el-link></el-col>
               </el-row>
               <el-row align="middle"  type="flex" >
                  <el-col span="10"></el-col>
@@ -78,20 +78,56 @@ export default {
   name: 'login',
   data() {
     return {
-      phone: '',
-      code:'123456'
+      mail: '',
+      code:''
     }
   },
   mounted:{
 
   },
   methods:{
+    getLoginCode:function(){
+
+       if(this.valid()==false){
+         return
+       }
+
+       this.$api.http("/v1/login/code","post",{"mail":this.mail}).then(res => {
+        console.log(res);
+      
+        if(res["rc"] == 0){
+          this.$message({
+                    showClose: true,
+                    message: "登录验证码已发送往邮箱",
+                    type: "success"
+           });
+          
+        
+        }else{
+          this.$message({
+            showClose: true,
+            message: "邮箱有误，登录验证码无法发送",
+            type: "error"
+          });
+        }
+
+      }).catch(err => {
+        console.log(err);
+        this.$message({
+          showClose: true,
+          message: "req failure",
+          type: "error"
+        });
+      });
+
+
+    },
     valid:function(){
 
-      if(this.phone == ''){
+      if(this.mail == ''){
           this.$message({
           showClose: true,
-          message: "手机号有误",
+          message: "邮箱有误",
           type: "error"
         });
         return false;
@@ -106,7 +142,7 @@ export default {
         return;
       }
 
-      this.$api.http("/v1/login","post",{"phone":this.phone,"code":this.code}).then(res => {
+      this.$api.http("/v1/login","post",{"mail":this.mail,"code":this.code}).then(res => {
         console.log(res);
       
         if(res["rc"] == 0){

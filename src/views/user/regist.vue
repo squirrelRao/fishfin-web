@@ -1,5 +1,5 @@
 <template>
-  <div id="login" class="main">
+  <div id="regist" class="main">
       <el-row align="middle" type="flex">
         <el-col span="6"></el-col>
         <el-col span="12">
@@ -26,10 +26,9 @@
                <el-row align="middle"  type="flex" >
                  <el-col span="8"></el-col>
                 <el-col span="10">
-                  <div class="grid-slogon-content"><font style="color:red">*</font>验证码: <el-input v-model="code" placeholder="请输入验证码" style="width:200px"/>
+                  <div class="grid-slogon-content"><font style="color:red">*</font>邮 箱: <el-input v-model="mail" placeholder="请输入常用邮箱" style="width:200px;margin-left:10px"/>
                   </div>
                 </el-col>
-                 <el-col span="4"><el-link type="primary">获取验证码</el-link></el-col>
               </el-row>
                <el-row align="middle"  type="flex" >
                  <el-col span="8"></el-col>
@@ -91,11 +90,11 @@
 </style>
 <script>
 export default {
-  name: 'login',
+  name: 'regist',
   data() {
     return {
       phone: '',
-      code:''
+      mail:''
     }
   },
   mounted:{
