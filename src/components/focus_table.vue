@@ -45,6 +45,10 @@
       label="建议"
       sortable
       width="100">
+             <template slot-scope="scope">
+
+      <el-tag>{{scope.row.advice}}</el-tag>
+             </template>
     </el-table-column>
      <el-table-column
       prop="rsi"

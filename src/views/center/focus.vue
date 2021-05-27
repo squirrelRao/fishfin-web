@@ -94,8 +94,15 @@ export default {
             item["low"] = _data["kline"]["low"];
             item["vol"] = _data["kline"]["vol"];
             if(_data["signal"] != null){
-              item["advice"] = _data["signal"]["advice"];
-              item["rsi"] = _data["signal"]["rsi"];
+              item["advice"] = _data["signal"]["singal"];
+              if(item["advice"] == "keep"){
+                item["advice"] = "持有";
+              }else if(item["advice"] == "buy"){
+                item["advice"] = "买入";
+              }else if(item["advice"] == "sell"){
+                item["advice"] = "卖出";
+              }
+              item["rsi"] = _data["signal"]["data"];
             }else{
               item["advice"] = "暂无";
               item["rsi"] = "-";
