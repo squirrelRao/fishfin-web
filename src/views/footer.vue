@@ -5,9 +5,9 @@
       </el-row>
       <el-dialog title="" :visible.sync="aboutDialogVisible" :append-to-body='true' width="30%" style="text-align:center">
       <el-image :src="require('@/assets/logo.png')" style="width:128px;cursor:Pointer"></el-image>
-      <h3>鱼鳍 v1.0</h3>
-      <h3>一个量化分析和交易模拟工具</h3>
-      <p>仅供用于学习研究参考，不可用于真实交易</p>
+      <h3>鱼鳍 v1.0 Alpha</h3>
+      <h3>一个量化分析工具</h3>
+      <p>仅可用于学习、参考和研究，不可用于任何交易</p>
       <p><span style="font-size:10px">* 由于虚拟货币的数据是开放的，所以使用了虚拟货币作为分析对象</span></p>
       <p>反馈: hqraop@163.com</p>
       <p>@2021 squirrelRao</p>

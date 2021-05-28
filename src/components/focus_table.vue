@@ -79,7 +79,7 @@
       width="80"
       >
        <template slot-scope="scope">
-       <el-tooltip content="当系统判断出信号足够明确，时机足够恰当，将自动发送邮件进行提醒" placement="bottom" effect="light">
+       <el-tooltip content="当系统发现信号足够明确，时机足够恰当，将自动发送邮件提醒" placement="bottom" effect="light">
                 <el-switch
             v-model="scope.row.is_signal"
             active-color="#13ce66"
@@ -269,8 +269,6 @@ export default {
         this.low_buy_rsi = row.buy_rsi;
         this.max_sale_rsi = row.sale_rsi
         this.symbol = row.symbol.replace("usdt","/usdt");
-        console.log(row);
-        console.log(row.period);
         this.period = row.period;
 
     },
