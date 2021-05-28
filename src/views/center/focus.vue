@@ -50,7 +50,8 @@ export default {
       activeName:"1min",
       data:[],
       page_no:1,
-      page_size:5
+      page_size:5,
+      intervalId:null
     }
   },
   components:{
@@ -61,8 +62,25 @@ export default {
   },
   mounted(){
     this.queryData();
+    this.refreshDataPeriodly();
+  },
+  destroyed(){
+
+    this.clear()
   },
   methods:{
+    refreshDataPeriodly(){
+
+      this.intervalId = setInterval(() => {
+        console.log("refresh data");
+        this.queryData(); //加载数据函数
+      }, 5000);
+
+    },
+    clear:function(){
+      clearInterval(this.intervalId);
+      this.intervalId = null;
+    },
     pageChange:function(page_no){
         this.page_no = page_no;
         this.queryData();
@@ -72,7 +90,9 @@ export default {
     },
     tabClick:function(tab, event){
         this.activeName = tab.name;
+        this.clear();
         this.queryData();
+        this.refreshDataPeriodly();
     },
     queryData:function(){
 
