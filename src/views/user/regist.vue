@@ -33,7 +33,7 @@
                <el-row align="middle"  type="flex" >
                  <el-col span="8"></el-col>
                 <el-col span="10">
-                  <div class="grid-slogon-content">昵 称: <el-input v-model="nickname" placeholder="请输入昵称" style="width:200px;margin-left:10px"/>
+                  <div class="grid-slogon-content">昵 称: <el-input v-model="name" placeholder="请输入昵称" style="width:200px;margin-left:10px"/>
                   </div>
                 </el-col>
                  <el-col span="2"></el-col>
@@ -49,7 +49,7 @@
               <el-row align="middle"  type="flex">
                  <el-col span="10"></el-col>
                 <el-col span="4">
-                  <div class="grid-slogon-content"><div class="grid-content" style="margin-top:20px"><el-button plain @click="enter">提 交</el-button></div>
+                  <div class="grid-slogon-content"><div class="grid-content" style="margin-top:20px"><el-button plain @click="regist">提 交</el-button></div>
                   </div>
                 </el-col>
                  <el-col span="2"><el-button plain @click="back">取 消</el-button></el-col>
@@ -94,7 +94,9 @@ export default {
   data() {
     return {
       phone: '',
-      mail:''
+      mail:'',
+      code:'',
+      name:''
     }
   },
   mounted:{
@@ -104,23 +106,54 @@ export default {
     toIndex:function(){
       this.$router.push({"path":"/"});
     },
+    
     back(){
       this.$router.push({"name":"login"});
     },
-    reqHttp: function() {
-     
-      this.$api.http("/", "get", {}).then(res => {
-        console.log(res);
+    regist: function() {
+
+      if(this.phone == '' || this.mail == "" || this.code == "" ){
         this.$message({
           showClose: true,
-          message: res["data"],
+          message: "请输入必要信息再提交",
+          type: "error"
+        });
+        return;
+      }
+     
+      this.$api.http("/v1/regist", "post", {"phone":this.phone,"mail":this.mail,"name":this.name,"invite_code":this.code}).then(res => {
+        console.log(res);
+        if(res["rc"] == 0){
+          this.$message({
+          showClose: true,
+          message: "注册成功！请前往登录...",
           type: "success"
         });
+        this.back();
+        return;
+
+        }else if(res["rc"] == -1){
+          this.$message({
+          showClose: true,
+          message: "手机号或邮箱已被注册!",
+          type: "error"
+        });
+        
+        }else if(res["rc"] == -2){
+
+          this.$message({
+          showClose: true,
+          message: "邀请码无效!",
+          type: "error"
+        });
+        }
+
+
       }).catch(err => {
         console.log(err);
         this.$message({
           showClose: true,
-          message: "",
+          message: "操作失败",
           type: "error"
         });
       });
@@ -128,7 +161,6 @@ export default {
     
   }
 }
-console.log("hi");
 </script>
 
 <style>

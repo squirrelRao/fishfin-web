@@ -29,7 +29,11 @@
                   <div class="grid-slogon-content">验证码: <el-input v-model="code" placeholder="请输入验证码" style="width:200px"/>
                   </div>
                 </el-col>
-                 <el-col span="3"><el-link type="primary" @click="getLoginCode">获取验证码</el-link></el-col>
+                 <el-col span="4">   
+                <el-link type="primary" v-if="escape_show" @click="getLoginCode">获取验证码</el-link>
+                <el-link type="info" v-if="!escape_show" @click="getLoginCode">{{times}}秒后重新获取</el-link>
+
+                </el-col>
               </el-row>
               <el-row align="middle"  type="flex" >
                  <el-col span="10"></el-col>
@@ -79,18 +83,33 @@ export default {
   data() {
     return {
       mail: '',
-      code:''
+      code:'',
+      escape_show:true,
+      times:20
     }
   },
   mounted:{
 
   },
   methods:{
+    interval_get_code:function(){
+
+      this.escape_show = false
+      this.timer = setInterval(()=>{
+        this.times--
+        if(this.times===0){
+          this.escape_show = true
+          clearInterval(this.timer)
+        }
+      },1000)
+    },
     getLoginCode:function(){
 
        if(this.valid()==false){
          return
        }
+
+       this.interval_get_code();
 
        this.$api.http("/v1/login/code","post",{"mail":this.mail}).then(res => {
         console.log(res);
