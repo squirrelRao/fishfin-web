@@ -75,9 +75,11 @@
       width="100">
     </el-table-column>
     <el-table-column
-      label="提醒"
-      width="80">
+      label="智能提醒"
+      width="80"
+      >
        <template slot-scope="scope">
+       <el-tooltip content="当系统判断出信号足够明确，时机足够恰当，将自动发送邮件进行提醒" placement="bottom" effect="light">
                 <el-switch
             v-model="scope.row.is_signal"
             active-color="#13ce66"
@@ -86,6 +88,7 @@
             @change="updateSignal(scope.row)"
             >
           </el-switch>
+       </el-tooltip>
       </template>
     </el-table-column>
     <el-table-column>
@@ -124,6 +127,11 @@
        <el-row style="text-align:left;margin-bottom:20px">
                 <el-col>
                  策  略: <span style="font-weight:bold">RSI</span>
+                </el-col>
+      </el-row>
+      <el-row style="text-align:left;margin-bottom:20px">
+                <el-col>
+                 频  率: <span style="font-weight:bold">{{period}}</span>
                 </el-col>
       </el-row>
       <el-row style="text-align:left;margin-bottom:20px">
@@ -261,17 +269,20 @@ export default {
         this.low_buy_rsi = row.buy_rsi;
         this.max_sale_rsi = row.sale_rsi
         this.symbol = row.symbol.replace("usdt","/usdt");
+        console.log(row);
+        console.log(row.period);
+        this.period = row.period;
 
     },
     updateStrategy:function(){
 
-      this.$api.http("/v1/strategy/update", "post", {"user_id":this.$store.getters.user_id,"symbol":this.symbol.replace("/",""),"strategy":"rsi","min_buy_rsi":this.low_buy_rsi,"max_sell_rsi":this.max_sale_rsi}).then(res => {
+      this.$api.http("/v1/strategy/update", "post", {"user_id":this.$store.getters.user_id,"period":this.period,"symbol":this.symbol.replace("/",""),"strategy":"rsi","min_buy_rsi":this.low_buy_rsi,"max_sell_rsi":this.max_sale_rsi}).then(res => {
         
         if(res["rc"] == 0){
 
           this.$message({
           showClose: true,
-          message: "策略更新成功，将在"+this.symbol+"所有监测频率上生效！",
+          message: "策略更新成功，将在"+this.symbol+"("+this.period+")"+"上生效！",
           type: "success"
         });
         this.strategySettingVisible = false;

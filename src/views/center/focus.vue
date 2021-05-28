@@ -87,6 +87,7 @@ export default {
             var item = {}
             var base_currency = "usdt";
             item["symbol"] = _data["symbol"];
+            item["period"] = _data["period"];
             item["currency"] = _data["symbol"].replace(base_currency,"");
             item["base_currency"] = base_currency;
             item["close"] = _data["kline"]["close"];
