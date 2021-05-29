@@ -46,8 +46,21 @@
       sortable
       width="100">
              <template slot-scope="scope">
+<el-popover
+  placement="right"
+  width=""
+  :title="singal_symbol_title"
+  trigger="click"
+  @show="querySignal(scope.row)" >
+  <el-table :data="latest_advice">
+    <el-table-column width="170" property="time" label="时刻"></el-table-column>
+    <el-table-column width="100" property="advice" label="建议"></el-table-column>
+    <el-table-column width="120" property="rsi" label="RSI"></el-table-column>
+  </el-table>
+        <el-tag slot="reference" style="cursor:pointer" >{{scope.row.advice}}</el-tag>
 
-      <el-tag>{{scope.row.advice}}</el-tag>
+</el-popover>
+
              </template>
     </el-table-column>
      <el-table-column
@@ -297,6 +310,45 @@ export default {
       });
 
     },
+    querySignal:function(row){
+
+      this.$api.http("/v1/signal/query", "post", {"user_id":this.$store.getters.user_id,"period":row.period,"symbol":row.symbol.replace("/","")}).then(res => {
+        
+        if(res["rc"] == 0){
+
+           this.latest_advice = [];
+           let data = res["data"];
+
+           this.singal_symbol_title = "「 "+row.symbol.replace("usdt","")+"/usdt 」"+row.period+"频率下最近"+data.length+"次信号";
+
+           for(var i = 0; i < data.length;i++){
+
+              var item = data[i];
+              var advice = "持有";
+              if(item["singal"] == "buy"){
+                advice = "买入"
+              }else if(item["singal"] == "sell"){
+                advice = "卖出"
+              }
+              
+              if(i == 0){
+                item["ktime_str"] = item["ktime_str"]+"(本次)"
+              }
+              this.latest_advice.push({"time":item["ktime_str"],"advice":advice,"rsi":item["data"]})
+
+           }
+        }
+       
+      }).catch(err => {
+        console.log(err);
+        this.$message({
+          showClose: true,
+          message: "操作失败",
+          type: "error"
+        });
+      });
+
+    },
     showCreateSimulation:function(){
       this.$alert('暂未开放', '消息', {
           confirmButtonText: '确定'
@@ -314,9 +366,11 @@ export default {
       strategySettingVisible:false,
       createSimulationVisible:false,
       data: [],
+      latest_advice:[],
       low_buy_rsi:0,
       max_sale_rsi:0,
       symbol:"",
+      singal_symbol_title:"最近信号",
       period:"",
       init_amount:5000,
       max_trade_amount:1000
