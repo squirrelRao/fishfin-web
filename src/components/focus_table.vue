@@ -68,6 +68,12 @@
       label="RSI"
       sortable
       width="100">
+       <template slot-scope="scope">
+             <el-tooltip :content="scope.row.advice" placement="bottom" effect="light">
+
+              <span :style="{'color':scope.row.rsi_color}">{{scope.row["rsi"]}}</span>
+             </el-tooltip>
+      </template>
     </el-table-column>
      <el-table-column
       prop="buy_rsi"
@@ -76,7 +82,7 @@
       width="90">
             <template slot-scope="scope">
 
-      <el-tooltip content="「 RSI 」小于等于「 RSI买 」时发出「 买入 」信号" placement="bottom" effect="light">
+      <el-tooltip content="「 RSI 」<=「 RSI买 」时发出「 买入 」信号" placement="bottom" effect="light">
               <span>{{scope.row["buy_rsi"]}}</span>
        </el-tooltip>
             </template>
@@ -87,7 +93,7 @@
       sortable
       width="90">
       <template slot-scope="scope">
-       <el-tooltip content="「 RSI 」大于「 RSI卖 」时发出「 卖出 」信号" placement="bottom" effect="light">
+       <el-tooltip content="「 RSI 」>「 RSI卖 」时发出「 卖出 」信号" placement="bottom" effect="light">
               <span>{{scope.row["sale_rsi"]}}</span>
        </el-tooltip>
       </template>

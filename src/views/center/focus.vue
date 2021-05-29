@@ -118,10 +118,13 @@ export default {
               item["advice"] = _data["signal"]["singal"];
               if(item["advice"] == "keep"){
                 item["advice"] = "持有";
+                item["rsi_color"] = "";
               }else if(item["advice"] == "buy"){
                 item["advice"] = "买入";
+                item["rsi_color"] = "#fa4d56";
               }else if(item["advice"] == "sell"){
                 item["advice"] = "卖出";
+                item["rsi_color"] = "#00b464";
               }
               item["rsi"] = _data["signal"]["data"];
             }else{
