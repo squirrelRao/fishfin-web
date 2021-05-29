@@ -93,7 +93,7 @@
       sortable
       width="90">
       <template slot-scope="scope">
-       <el-tooltip content="「 RSI 」>「 RSI卖 」时发出「 卖出 」信号" placement="bottom" effect="light">
+       <el-tooltip content="「 RSI 」>=「 RSI卖 」时发出「 卖出 」信号" placement="bottom" effect="light">
               <span>{{scope.row["sale_rsi"]}}</span>
        </el-tooltip>
       </template>
@@ -148,7 +148,7 @@
             ></el-pagination>
    </div>
    <!-- set strategy params dialog -->
-  <el-dialog title="策略参数设置" width="30%" :visible.sync="strategySettingVisible" >
+  <el-dialog title="策略参数设置" width="40%" :visible.sync="strategySettingVisible" >
     <el-row style="text-align:left;margin-bottom:20px">
                 <el-col>
                  交易对: <span style="font-weight:bold">{{symbol}}</span>
@@ -166,12 +166,12 @@
       </el-row>
       <el-row style="text-align:left;margin-bottom:20px">
                 <el-col >
-                买入RSI值: <el-input v-model="low_buy_rsi" placeholder="" style="width:200px"/>
+                买入RSI: <el-input v-model="low_buy_rsi" placeholder="" style="width:200px"/>（ RSI小于或等于该值发出买入信号 ）
                 </el-col>
       </el-row>
       <el-row style="text-align:left;margin-bottom:20px">
                 <el-col >
-                卖出RSI值: <el-input v-model="max_sale_rsi" placeholder="" style="width:200px"/>
+                卖出RSI: <el-input v-model="max_sale_rsi" placeholder="" style="width:200px"/>（ RSI大于或等于该值发出卖出信号 ）
                 </el-col>
       </el-row>
       <el-row style="text-align:center;">
@@ -302,7 +302,18 @@ export default {
         this.period = row.period;
 
     },
+    
     updateStrategy:function(){
+
+      if(this.low_buy_rsi >= this.max_sale_rsi){
+
+         this.$message({
+          showClose: true,
+          message: "「 买入RSI 」必须小于 「 卖出RSI 」",
+          type: "error"
+        });
+        return;
+      }
 
       this.$api.http("/v1/strategy/update", "post", {"user_id":this.$store.getters.user_id,"period":this.period,"symbol":this.symbol.replace("/",""),"strategy":"rsi","min_buy_rsi":this.low_buy_rsi,"max_sell_rsi":this.max_sale_rsi}).then(res => {
         
