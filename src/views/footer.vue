@@ -10,7 +10,16 @@
       <p>仅可用于学习、参考和研究，不可用于任何交易</p>
       <p><span style="font-size:10px">* 由于虚拟货币的数据是开放的，所以使用了虚拟货币作为分析对象</span></p>
       <p>反馈: hqraop@163.com</p>
-      <p>@2021 squirrelRao</p>
+      <p> <el-popover
+    placement="bottom"
+    title="关于"
+    width=""
+    trigger="click"
+    content="请发邮件到hqraop@163.com联系">
+    <el-link slot="reference">@2021 squirrelRao</el-link>
+  </el-popover>
+
+    </p>
       </el-dialog>
     </div>
     
