@@ -82,7 +82,7 @@
       width="90">
             <template slot-scope="scope">
 
-      <el-tooltip content="「 RSI 」<=「 RSI买 」时发出「 买入 」信号" placement="bottom" effect="light">
+      <el-tooltip content="「 RSI 」>=「 RSI买 」时发出「 买入 」信号" placement="bottom" effect="light">
               <span>{{scope.row["buy_rsi"]}}</span>
        </el-tooltip>
             </template>
@@ -93,7 +93,7 @@
       sortable
       width="90">
       <template slot-scope="scope">
-       <el-tooltip content="「 RSI 」>=「 RSI卖 」时发出「 卖出 」信号" placement="bottom" effect="light">
+       <el-tooltip content="「 RSI 」<=「 RSI卖 」时发出「 卖出 」信号" placement="bottom" effect="light">
               <span>{{scope.row["sale_rsi"]}}</span>
        </el-tooltip>
       </template>
@@ -166,12 +166,12 @@
       </el-row>
       <el-row style="text-align:left;margin-bottom:20px">
                 <el-col >
-                买入RSI: <el-input v-model="low_buy_rsi" placeholder="" style="width:200px"/>（ RSI小于或等于该值发出买入信号 ）
+                买入RSI: <el-input v-model="low_buy_rsi" placeholder="" style="width:200px"/>（ RSI大于或等于该值发出买入信号 ）
                 </el-col>
       </el-row>
       <el-row style="text-align:left;margin-bottom:20px">
                 <el-col >
-                卖出RSI: <el-input v-model="max_sale_rsi" placeholder="" style="width:200px"/>（ RSI大于或等于该值发出卖出信号 ）
+                卖出RSI: <el-input v-model="max_sale_rsi" placeholder="" style="width:200px"/>（ RSI小于或等于该值发出卖出信号 ）
                 </el-col>
       </el-row>
       <el-row style="text-align:center;">
@@ -305,11 +305,11 @@ export default {
     
     updateStrategy:function(){
 
-      if(this.low_buy_rsi >= this.max_sale_rsi){
+      if(this.low_buy_rsi <= this.max_sale_rsi){
 
          this.$message({
           showClose: true,
-          message: "「 买入RSI 」必须小于 「 卖出RSI 」",
+          message: "「 卖出RSI 」必须小于 「 买入RSI 」",
           type: "error"
         });
         return;
