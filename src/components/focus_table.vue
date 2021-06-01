@@ -199,6 +199,16 @@
       </el-row>
       <el-row style="text-align:left;margin-bottom:20px">
                 <el-col >
+                买入RSI:  <span style="font-weight:bold">{{low_buy_rsi}}</span>
+                </el-col>
+      </el-row>
+      <el-row style="text-align:left;margin-bottom:20px">
+                <el-col >
+                卖出RSI:  <span style="font-weight:bold">{{max_sale_rsi}}</span>
+                </el-col>
+      </el-row>
+      <el-row style="text-align:left;margin-bottom:20px">
+                <el-col >
                 初始额度: <el-input v-model="init_amount" placeholder="" style="width:200px"/> usdt
                 </el-col>
       </el-row>
@@ -207,19 +217,9 @@
                 交易限额: <el-input v-model="limit_trade_amount" placeholder="" style="width:200px"/> usdt
                 </el-col>
       </el-row>
-      <el-row style="text-align:left;margin-bottom:20px">
-                <el-col >
-                买入RSI:  <el-input v-model="low_buy_rsi" placeholder="" style="width:200px" disabled/>
-                </el-col>
-      </el-row>
-      <el-row style="text-align:left;margin-bottom:20px">
-                <el-col >
-                卖出RSI:  <el-input v-model="max_sale_rsi" placeholder="" style="width:200px" disabled/>
-                </el-col>
-      </el-row>
       <el-row style="text-align:left;margin-bottom:30px">
         <el-col>
-   时间段:
+     交易时间:
     <el-date-picker
       v-model="date_range"
       type="daterange"
