@@ -9,7 +9,7 @@
       </el-row>
     <el-row class="tab_panes">
       <el-col offset=1 span=22>
-   <el-table
+  <el-table
     :data="data"
     stripe
     style="width:100%"
@@ -17,10 +17,9 @@
     >
     <el-table-column
       label="交易对"
-      sortable
       width="130">
       <template slot-scope="scope">
-      <span style="margin-left:0px;font-weight:bold;font-size:16px">{{ scope.row.currency }}</span>/<span style="font-size:14px;;">{{ scope.row.base_currency }}</span>
+      <span style="margin-left:0px;font-weight:bold;font-size:16px">{{ scope.row.quote_currency }}</span>/<span style="font-size:14px;;">{{ scope.row.base_currency }}</span>
       </template>
     </el-table-column>
     <el-table-column
@@ -30,31 +29,31 @@
       width="100">
     </el-table-column>
    <el-table-column
-      prop="freq"
+      prop="period"
       label="交易频率"
       sortable
       width="100">
     </el-table-column>
     <el-table-column
-      prop="starttime"
+      prop="start_time"
       label="开始时间"
       sortable
       width="100">
     </el-table-column>
     <el-table-column
-      prop="endtime"
+      prop="end_time"
       label="结束时间"
       sortable
       width="100">
     </el-table-column>
     <el-table-column
-      prop="start_amount"
+      prop="init_amount"
       label="初始金额"
       sortable
       width="130">
     </el-table-column>
      <el-table-column
-      prop="max_exchange_amount"
+      prop="limit_trade_count"
       label="最大交易额"
       sortable
       width="130">
@@ -66,24 +65,30 @@
       width="120">
     </el-table-column>
      <el-table-column
-      prop="status"
+      prop="status_str"
       label="状态"
       sortable
       width="80">
     </el-table-column>
     <el-table-column
-      prop="datetime"
+      prop="create_time_str"
       label="创建时间"
       sortable
-      width="">
+      width="100">
     </el-table-column>
-    
+    <el-table-column
+      label="操作"
+      >
+      <template slot-scope="scope">
+          <el-link type="primary" @click="handleEdit(scope.row)" >重算</el-link>
+      </template>
+    </el-table-column>
   </el-table>
       </el-col>
     </el-row>
     <el-row>
             <el-col offset=1 span="22">
-              <div id="chart" style="margin-top:20px">
+              <div id="chart" style="margin-top:20px;margin-bottom:20px;height:550px">
                 交易记录图
               </div>
             </el-col>
@@ -110,32 +115,17 @@ export default {
   name: 'simulation_detail',
   data() {
     return {
-      phone: '',
-      code:'',
-      symbol:'doge/usdt',
-      data: [{
-          symbol: 'doge/usdt',
-          currency:'doge',
-          base_currency:'usdt',
-          strategy: 'RSI',
-          freq:'1min',
-          starttime: '2021-05-01',
-          endtime: '2021-05-12',
-          start_amount: '5000usdt',
-          max_exchange_amount: '1000usdt',
-          ror:'2.12%',
-          status:'模拟完成',
-          datetime:'2021-05-12 09:30:11'
-        }
-        
-        ]
+      data: [],
+      ror:[],
+      task_id:this.$route.params.id
     }
   },
   components:{
     simulation_table
   },
-  mounted:{
-
+  mounted(){
+    console.log(this.task_id);
+    this.queryData();
   },
   methods:{
     goBack:function(){
@@ -147,18 +137,24 @@ export default {
     toIndex:function(){
       this.$router.push({"path":"/"});
     },
-    hi(){
-        this.reqHttp()
-    },
-    reqHttp: function() {
-     
-      this.$api.http("/", "get", {}).then(res => {
+    queryData:function(){
+
+       this.$api.http("/v1/backtest/detail", "post", {"task_id":this.task_id}).then(res => {
         console.log(res);
-        this.$message({
-          showClose: true,
-          message: res["data"],
-          type: "success"
-        });
+        this.data = [];
+        if(res["rc"] == 0){
+          this.ror = res["ror"];
+            var _data = res["data"];
+            _data["status_str"] = "等待执行";
+            if(_data["status"] == 1){
+                _data["status_str"] = "执行中";        
+            }else if(_data["status"] ==2){
+                _data["status_str"] = "已完成"; 
+            }
+            _data["ror"] = _data["ror"]+"%";
+            this.data.push(_data);
+
+          }
       }).catch(err => {
         console.log(err);
         this.$message({
@@ -167,8 +163,7 @@ export default {
           type: "error"
         });
       });
-    }
-    
+   }
   }
 }
 </script>

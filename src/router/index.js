@@ -58,7 +58,7 @@ const router =  new Router({
       }
     },
     {
-      path: '/center/simulation_detail',
+      path: '/center/simulation_detail/:id',
       name: 'simulation_detail',
       components: {
         header:center_head,
