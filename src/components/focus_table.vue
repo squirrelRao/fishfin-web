@@ -128,7 +128,7 @@
 
       </el-row>
       <el-row>
-                <el-link size="small" type="primary" @click="showCreateSimulation(scope.$index, scope.row)" >交易模拟</el-link>
+                <el-link size="small" type="primary" @click="showCreateSimulation(scope.row)" >交易模拟</el-link>
 
       </el-row>
       <el-row>
@@ -184,7 +184,7 @@
    <el-dialog title="创建模拟交易" width="30%" :visible.sync="createSimulationVisible" >
     <el-row style="text-align:left;margin-bottom:20px">
                 <el-col>
-                 交易对: <span style="font-weight:bold">doge/usdt</span>
+                 交易对: <span style="font-weight:bold">{{symbol}}</span>
                 </el-col>
       </el-row>
        <el-row style="text-align:left;margin-bottom:20px">
@@ -194,7 +194,7 @@
       </el-row>
        <el-row style="text-align:left;margin-bottom:20px">
                 <el-col>
-                 交易频率: <span style="font-weight:bold">1min</span>
+                 交易频率: <span style="font-weight:bold">{{period}}</span>
                 </el-col>
       </el-row>
       <el-row style="text-align:left;margin-bottom:20px">
@@ -204,18 +204,33 @@
       </el-row>
        <el-row style="text-align:left;margin-bottom:20px">
                 <el-col >
-                交易限额: <el-input v-model="max_trade_amount" placeholder="" style="width:200px"/> usdt
+                交易限额: <el-input v-model="limit_trade_amount" placeholder="" style="width:200px"/> usdt
                 </el-col>
       </el-row>
       <el-row style="text-align:left;margin-bottom:20px">
                 <el-col >
-                买入RSI: <el-input v-model="low_buy_rsi" placeholder="" style="width:200px"/>
+                买入RSI:  <el-input v-model="low_buy_rsi" placeholder="" style="width:200px" disabled/>
                 </el-col>
       </el-row>
       <el-row style="text-align:left;margin-bottom:20px">
                 <el-col >
-                卖出RSI: <el-input v-model="max_sale_rsi" placeholder="" style="width:200px"/>
+                卖出RSI:  <el-input v-model="max_sale_rsi" placeholder="" style="width:200px" disabled/>
                 </el-col>
+      </el-row>
+      <el-row style="text-align:left;margin-bottom:30px">
+        <el-col>
+   时间段:
+    <el-date-picker
+      v-model="date_range"
+      type="daterange"
+      align="right"
+      unlink-panels
+      range-separator="至"
+      start-placeholder="开始日期"
+      end-placeholder="结束日期"
+      :picker-options="pickerOptions">
+    </el-date-picker>
+        </el-col>
       </el-row>
       <el-row style="text-align:center;">
                 <el-col >
@@ -302,6 +317,19 @@ export default {
         this.period = row.period;
 
     },
+     showCreateSimulation:function(row){
+      // this.$alert('暂未开放', '消息', {
+      //     confirmButtonText: '确定'
+      //   });
+      this.createSimulationVisible = true;
+
+      this.low_buy_rsi = row.buy_rsi;
+      this.max_sale_rsi = row.sale_rsi
+      this.symbol = row.symbol.replace("usdt","/usdt");
+      this.period = row.period;
+
+
+    },
     
     updateStrategy:function(){
 
@@ -377,12 +405,7 @@ export default {
       });
 
     },
-    showCreateSimulation:function(){
-      this.$alert('暂未开放', '消息', {
-          confirmButtonText: '确定'
-        });
-      // this.createSimulationVisible = true;
-    },
+   
     openKline:function(){
         window.open("https://www.huobi.pe/zh-cn/exchange/btc_usdt/", '_blank');
     }
@@ -401,7 +424,8 @@ export default {
       singal_symbol_title:"最近信号",
       period:"",
       init_amount:5000,
-      max_trade_amount:1000
+      limit_trade_amount:1000,
+      date_range:[]
     }
   },
   props:{
