@@ -46,9 +46,31 @@
     </el-table-column>
      <el-table-column
       prop="limit_trade_count"
-      label="最大交易额"
+      label="交易限额"
       sortable
       width="130">
+    </el-table-column>
+     <el-table-column
+      prop="buy_rsi"
+      label="RSI买"
+      sortable
+      width="90">
+            <template slot-scope="scope">
+      <el-tooltip content="「 RSI 」>=「 RSI买 」时发出「 买入 」信号" placement="bottom" effect="light">
+              <span>{{scope.row["buy_rsi"]}}</span>
+       </el-tooltip>
+            </template>
+    </el-table-column>
+     <el-table-column
+      prop="sale_rsi"
+      label="RSI卖"
+      sortable
+      width="90">
+      <template slot-scope="scope">
+       <el-tooltip content="「 RSI 」<=「 RSI卖 」时发出「 卖出 」信号" placement="bottom" effect="light">
+              <span>{{scope.row["sell_rsi"]}}</span>
+       </el-tooltip>
+      </template>
     </el-table-column>
      <el-table-column
       prop="ror"
@@ -73,8 +95,8 @@
       >
       <template slot-scope="scope">
           <el-link type="primary" @click="toDetail(scope.row)" >详情</el-link>
-          <el-link type="primary" @click="handleEdit(scope.row)" >重算</el-link>
-          <el-link type="primary" @click="handleEdit(scope.row)" >删除</el-link>
+          <!-- <el-link type="primary" @click="handleEdit(scope.row)" >重算</el-link> -->
+          <el-link type="primary" @click="remove(scope.row)" >删除</el-link>
       </template>
     </el-table-column>
   </el-table>
@@ -109,6 +131,46 @@ export default {
               this.page_size = page_size;
               this.totalnum = total_count;
     },
+
+    remove:function(row){
+
+
+       this.$confirm('此操作将删除该任务, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$api.http("/v1/backtest/remove", "post", {"task_id":row["_id"]}).then(res => {
+        console.log(res);
+
+        if(res["rc"] == 0){
+          
+            this.$emit("refresh");
+            this.$message({
+          showClose: true,
+          message: "任务已删除!",
+          type: "success"
+        });
+
+        }
+      }).catch(err => {
+        console.log(err);
+        this.$message({
+          showClose: true,
+          message: "操作失败",
+          type: "error"
+        });
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });
+
+      
+    },
+
       toDetail:function(row){
 
           this.$router.push({"path":"/center/simulation_detail/"+row._id});

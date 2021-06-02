@@ -2,7 +2,7 @@
    <div id="simulation_detail" class="main">
       <el-row class="tab_panes">
         <el-col offset=1 span=22>
-          <div style="text-align:left;margin-top:20px;margin-bottom:20px;">
+          <div style="text-align:left;margin-top:10px;margin-bottom:0px;">
             <el-page-header @back="goBack" content="模拟详情" ></el-page-header>
           </div>
         </el-col>
@@ -54,11 +54,33 @@
     </el-table-column>
      <el-table-column
       prop="limit_trade_count"
-      label="最大交易额"
+      label="交易限额"
       sortable
       width="130">
     </el-table-column>
      <el-table-column
+      prop="buy_rsi"
+      label="RSI买"
+      sortable
+      width="90">
+            <template slot-scope="scope">
+      <el-tooltip content="「 RSI 」>=「 RSI买 」时发出「 买入 」信号" placement="bottom" effect="light">
+              <span>{{scope.row["buy_rsi"]}}</span>
+       </el-tooltip>
+            </template>
+    </el-table-column>
+     <el-table-column
+      prop="sale_rsi"
+      label="RSI卖"
+      sortable
+      width="90">
+      <template slot-scope="scope">
+       <el-tooltip content="「 RSI 」<=「 RSI卖 」时发出「 卖出 」信号" placement="bottom" effect="light">
+              <span>{{scope.row["sell_rsi"]}}</span>
+       </el-tooltip>
+      </template>
+    </el-table-column>
+    <el-table-column
       prop="ror"
       label="收益率"
       sortable
@@ -74,14 +96,7 @@
       prop="create_time_str"
       label="创建时间"
       sortable
-      width="100">
-    </el-table-column>
-    <el-table-column
-      label="操作"
-      >
-      <template slot-scope="scope">
-          <el-link type="primary" @click="handleEdit(scope.row)" >重算</el-link>
-      </template>
+      width="">
     </el-table-column>
   </el-table>
       </el-col>
@@ -144,14 +159,16 @@ export default {
         this.data = [];
         if(res["rc"] == 0){
           this.ror = res["ror"];
+
             var _data = res["data"];
+            _data["ror"] = _data["ror"]+"%";
+
             _data["status_str"] = "等待执行";
             if(_data["status"] == 1){
                 _data["status_str"] = "执行中";        
             }else if(_data["status"] ==2){
                 _data["status_str"] = "已完成"; 
             }
-            _data["ror"] = _data["ror"]+"%";
             this.data.push(_data);
 
           }

@@ -246,6 +246,10 @@
 export default {
   name: 'focus_table',
   mounted(){
+    const end = new Date();
+    const start = new Date();
+    start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+    this.date_range = [start, end];
   },
   methods:{
     pageChange:function(cur_page){
@@ -283,16 +287,16 @@ export default {
     submitCreateTask:function(){
 
       this.$api.http("/v1/backtest/add", "post", {"user_id":this.$store.getters.user_id,"quote_currency":this.symbol.replace("/usdt",""),"base_currency":"usdt","strategy":"rsi","period":this.period,
-      "limit_trade_count":this.limit_trade_count,"init_amount":this.init_amount,"start_time":this.date_range[0],"end_time":this.date_range[1]}).then(res => {
+      "limit_trade_count":this.limit_trade_count,"init_amount":this.init_amount,"buy_rsi":this.low_buy_rsi,"sell_rsi":this.max_sale_rsi,"start_time":this.date_range[0],"end_time":this.date_range[1]}).then(res => {
         
         if(res["rc"] == 0){
-
+          this.createSimulationVisible = false;
           this.$message({
           showClose: true,
           message: "模拟交易创建成功！请前往「 模拟记录 」里查看",
           type: "success"
         });
-         this.strategySettingVisible = false;
+         
         }
        
       }).catch(err => {
@@ -450,7 +454,43 @@ export default {
       period:"",
       init_amount:5000,
       limit_trade_count:1000,
-      date_range:[]
+      date_range:[],
+      pickerOptions: {
+          shortcuts: [{
+            text: '最近一周',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近一个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近三个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30 * 3);
+              picker.$emit('pick', [start, end]);
+            }
+          },
+            {
+            text: '最近六个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30 * 6);
+              picker.$emit('pick', [start, end]);
+            }
+          }]
+        }
     }
   },
   props:{
