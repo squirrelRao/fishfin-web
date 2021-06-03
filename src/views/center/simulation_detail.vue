@@ -90,11 +90,23 @@
       prop="avg_ror"
       label="日均收益率"
       width="120">
+      <template slot-scope="scope">
+             <el-tooltip :content="scope.row.advice" placement="bottom" effect="light">
+
+              <span :style="{'color':scope.row.avg_ror_color}">{{scope.row["avg_ror"]}}</span>
+             </el-tooltip>
+      </template>
     </el-table-column>
      <el-table-column
       prop="total_ror"
       label="累计收益率"
       width="120">
+      <template slot-scope="scope">
+             <el-tooltip :content="scope.row.advice" placement="bottom" effect="light">
+
+              <span :style="{'color':scope.row.total_ror_color}">{{scope.row["total_ror"]}}</span>
+             </el-tooltip>
+      </template>
      </el-table-column>
      <el-table-column
       prop="status_str"
@@ -187,6 +199,19 @@ export default {
             }else if(_data["status"] ==2){
                 _data["status_str"] = "已完成"; 
             }
+
+            if(_data["avg_ror"] >= 0){
+              _data["avg_ror_color"] = "#00b464";
+            }else{
+              _data["avg_ror_color"] = "#fa4d56";
+            }
+
+            if(_data["total_ror"] >= 0){
+              _data["total_ror_color"] = "#00b464";
+            }else{
+              _data["total_ror_color"] = "#fa4d56";
+            }
+
              _data["avg_ror"]=_data["avg_ror"]+"%"
             _data["total_ror"]=_data["total_ror"]+"%"
             this.data.push(_data);

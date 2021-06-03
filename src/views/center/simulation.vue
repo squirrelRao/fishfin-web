@@ -66,6 +66,17 @@ export default {
             }else if(_data["status"] ==2){
                 _data["status_str"] = "已完成"; 
             }
+              if(_data["avg_ror"] >= 0){
+              _data["avg_ror_color"] = "#00b464";
+            }else{
+              _data["avg_ror_color"] = "#fa4d56";
+            }
+
+            if(_data["total_ror"] >= 0){
+              _data["total_ror_color"] = "#00b464";
+            }else{
+              _data["total_ror_color"] = "#fa4d56";
+            }
             _data["avg_ror"]=_data["avg_ror"]+"%"
             _data["total_ror"]=_data["total_ror"]+"%"
             data.push(_data);

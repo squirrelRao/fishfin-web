@@ -83,12 +83,24 @@
       label="日均收益率"
       sortable
       width="120">
+        <template slot-scope="scope">
+             <el-tooltip :content="scope.row.advice" placement="bottom" effect="light">
+
+              <span :style="{'color':scope.row.avg_ror_color}">{{scope.row["avg_ror"]}}</span>
+             </el-tooltip>
+      </template>
     </el-table-column>
      <el-table-column
       prop="total_ror"
       label="累计收益率"
       sortable
       width="120">
+        <template slot-scope="scope">
+             <el-tooltip :content="scope.row.advice" placement="bottom" effect="light">
+
+              <span :style="{'color':scope.row.total_ror_color}">{{scope.row["total_ror"]}}</span>
+             </el-tooltip>
+      </template>
     </el-table-column>
      <el-table-column
       prop="status_str"
