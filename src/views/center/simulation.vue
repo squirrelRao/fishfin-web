@@ -85,7 +85,7 @@ export default {
             _data["status_str"] = "等待执行";
              _data["is_show_detail"] = false;  
             if(_data["status"] == 1){
-                _data["status_str"] = "执行中";  
+                _data["status_str"] = "正在模拟";  
                 _data["is_show_detail"] = false;      
             }else if(_data["status"] ==2){
                 _data["status_str"] = "已完成"; 
