@@ -228,6 +228,7 @@
       range-separator="至"
       start-placeholder="开始日期"
       end-placeholder="结束日期"
+      value-format="yyyy-MM-dd HH:mm:ss"
       :picker-options="pickerOptions">
     </el-date-picker>
         </el-col>
@@ -286,6 +287,7 @@ export default {
 
     submitCreateTask:function(){
 
+      
       this.$api.http("/v1/backtest/add", "post", {"user_id":this.$store.getters.user_id,"quote_currency":this.symbol.replace("/usdt",""),"base_currency":"usdt","strategy":"rsi","period":this.period,
       "limit_trade_count":this.limit_trade_count,"init_amount":this.init_amount,"buy_rsi":this.low_buy_rsi,"sell_rsi":this.max_sale_rsi,"start_time":this.date_range[0],"end_time":this.date_range[1]}).then(res => {
         
