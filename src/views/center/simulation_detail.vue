@@ -113,8 +113,15 @@
     </el-row>
     <el-row>
             <el-col offset=1 span="22">
-              <div id="chart" style="margin-top:20px;margin-bottom:20px;height:550px">
-                交易记录图
+              <div id="total_ror_chart" style="margin-top:10px;margin-bottom:10px;height:300px">
+                累计收益率
+              </div>
+            </el-col>
+    </el-row>
+     <el-row>
+            <el-col offset=1 span="22">
+              <div id="daily_ror_chart" style="margin-top:10px;margin-bottom:10px;height:300px">
+                每日收益
               </div>
             </el-col>
     </el-row>
@@ -142,7 +149,8 @@ export default {
     return {
       data: [],
       ror:[],
-      task_id:this.$route.params.id
+      task_id:this.$route.params.id,
+      backtest:[]
     }
   },
   components:{
@@ -168,10 +176,9 @@ export default {
         console.log(res);
         this.data = [];
         if(res["rc"] == 0){
-          this.ror = res["ror"];
-
-            var _data = res["data"];
-            _data["ror"] = _data["ror"]+"%";
+        
+            var _data = res["task"];
+            this.backtest = res["backtest"]              
 
             _data["status_str"] = "等待执行";
             if(_data["status"] == 1){
