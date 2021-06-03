@@ -110,8 +110,8 @@ export default {
                 _data["last_current_value"] = _data["init_amount"];
             }
             _data["total_ror_value"] = (_data["last_current_value"] - _data["init_amount"]).toFixed(6);
-            _data["avg_ror"]=_data["avg_ror"]+"%"
-            _data["total_ror"]=_data["total_ror"]+"%"
+            _data["avg_ror"]=_data["avg_ror"].toFixed(2)+"%"
+            _data["total_ror"]=_data["total_ror"].toFixed(2)+"%"
            }
 
           

@@ -207,8 +207,8 @@ export default {
             }
             _data["total_ror_value"] = (_data["last_current_value"] - _data["init_amount"]).toFixed(6);
 
-             _data["avg_ror"]=_data["avg_ror"]+"%"
-            _data["total_ror"]=_data["total_ror"]+"%"
+             _data["avg_ror"]=_data["avg_ror"].toFixed(2)+"%"
+            _data["total_ror"]=_data["total_ror"].toFixed(2)+"%"
             this.data.push(_data);
 
              this.drawChart(this.backtest["back_result"],"total_ror_chart","累计收益率","%");
