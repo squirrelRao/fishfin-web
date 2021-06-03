@@ -46,15 +46,21 @@
       sortable
       width="100">
     </el-table-column>
-    <el-table-column
+     <el-table-column
+      prop="limit_trade_count"
+      label="交易限额"
+      sortable
+      width="130">
+    </el-table-column>
+     <el-table-column
       prop="init_amount"
       label="初始金额"
       sortable
       width="130">
     </el-table-column>
      <el-table-column
-      prop="limit_trade_count"
-      label="交易限额"
+      prop="last_current_value"
+      label="最终金额"
       sortable
       width="130">
     </el-table-column>
@@ -80,12 +86,16 @@
        </el-tooltip>
       </template>
     </el-table-column>
-    <el-table-column
-      prop="ror"
-      label="收益率"
-      sortable
+     <el-table-column
+      prop="avg_ror"
+      label="日均收益率"
       width="120">
     </el-table-column>
+     <el-table-column
+      prop="total_ror"
+      label="累计收益率"
+      width="120">
+     </el-table-column>
      <el-table-column
       prop="status_str"
       label="状态"
@@ -169,6 +179,8 @@ export default {
             }else if(_data["status"] ==2){
                 _data["status_str"] = "已完成"; 
             }
+             _data["avg_ror"]=_data["avg_ror"]+"%"
+            _data["total_ror"]=_data["total_ror"]+"%"
             this.data.push(_data);
 
           }

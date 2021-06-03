@@ -66,7 +66,8 @@ export default {
             }else if(_data["status"] ==2){
                 _data["status_str"] = "已完成"; 
             }
-          
+            _data["avg_ror"]=_data["avg_ror"]+"%"
+            _data["total_ror"]=_data["total_ror"]+"%"
             data.push(_data);
 
           }

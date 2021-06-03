@@ -38,15 +38,21 @@
       sortable
       width="100">
     </el-table-column>
-    <el-table-column
+     <el-table-column
+      prop="limit_trade_count"
+      label="交易限额"
+      sortable
+      width="130">
+    </el-table-column>
+     <el-table-column
       prop="init_amount"
       label="初始金额"
       sortable
       width="130">
     </el-table-column>
      <el-table-column
-      prop="limit_trade_count"
-      label="交易限额"
+      prop="last_current_value"
+      label="最终金额"
       sortable
       width="130">
     </el-table-column>
@@ -73,8 +79,14 @@
       </template>
     </el-table-column>
      <el-table-column
-      prop="ror"
-      label="收益率"
+      prop="avg_ror"
+      label="日均收益率"
+      sortable
+      width="120">
+    </el-table-column>
+     <el-table-column
+      prop="total_ror"
+      label="累计收益率"
       sortable
       width="120">
     </el-table-column>
