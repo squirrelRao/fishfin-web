@@ -150,7 +150,7 @@ export default {
       data: [],
       ror:[],
       task_id:this.$route.params.id,
-      backtest:[]
+      backtest:null
     }
   },
   components:{
