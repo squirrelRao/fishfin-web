@@ -1,4 +1,4 @@
-import { sequence } from "@/unitls/common_util";
+import { sequence } from "@/libs/common_util";
 
 //绘图所需要的option的数据结构及定义
 export function getChartOption() {

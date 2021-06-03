@@ -113,14 +113,14 @@
     </el-row>
     <el-row>
             <el-col offset=1 span="22">
-              <div id="total_ror_chart" style="margin-top:10px;margin-bottom:10px;height:300px">
+              <div id="total_ror_chart" style="margin-top:10px;margin-bottom:10px;height:360px">
                 累计收益率
               </div>
             </el-col>
     </el-row>
      <el-row>
             <el-col offset=1 span="22">
-              <div id="daily_ror_chart" style="margin-top:10px;margin-bottom:10px;height:300px">
+              <div id="daily_ror_chart" style="margin-top:10px;margin-bottom:10px;height:360px">
                 每日收益
               </div>
             </el-col>
@@ -142,6 +142,7 @@
 </style>
 <script>
 import simulation_table from '@/components/simulation_table'
+import { drawChart } from "@/libs/charts_util"
 
 export default {
   name: 'simulation_detail',
@@ -150,7 +151,7 @@ export default {
       data: [],
       ror:[],
       task_id:this.$route.params.id,
-      backtest:null
+      backtest:[]
     }
   },
   components:{
@@ -190,6 +191,9 @@ export default {
             _data["total_ror"]=_data["total_ror"]+"%"
             this.data.push(_data);
 
+             this.drawChart(this.backtest["back_result"],"total_ror_chart","累计收益率","%");
+             this.drawChart(this.backtest["back_result"],"daily_ror_chart","每日收益","usdt");
+
           }
       }).catch(err => {
         console.log(err);
@@ -199,7 +203,74 @@ export default {
           type: "error"
         });
       });
-   }
+   },
+    drawChart(infos,chart_id,chart_title,chart_unit) {
+      var x_data = [];
+      var y_data = [];
+      var _legend = [chart_title];
+      var _series = [];
+      var colorList =[];
+     
+     
+      for(var i = 0; i < infos.length; i++){
+          var item = infos[i];
+          x_data.push(item["start_ktime_str"]);
+          if(chart_title == "累计收益率"){
+            y_data.push(item["total_ror"])
+          }else{
+            let y = (item["end_value"] - item["start_value"]).toFixed(6);
+            y_data.push(y);
+            if(y >= 0){
+              colorList.push("#00b464");
+            }else{
+              colorList.push("#fa4d56");
+            }
+           
+          }
+          
+       }
+
+      if(chart_title=="累计收益率"){
+                let series ;
+   series = { name:_legend[0],
+            data: y_data,
+            type: "line",
+            smooth: true};
+        _series.push(series);
+
+      }else{
+               let bar = { name:_legend[0],
+            data: y_data,
+            type: "bar",
+            barWidth:'20%',
+            itemStyle: {
+                        normal: {
+                            color: function(params) {
+                                return colorList[params.dataIndex]
+                            }
+                        }
+                    },
+            smooth: true};
+          _series.push(bar);
+      }
+
+     
+      drawChart(chart_id, {
+        title: chart_title,
+        legend: _legend,
+        x_type: "category",
+        x_data: x_data,
+        y_type: "value",
+        y_name: chart_unit,
+        y_unit_fn: function(value) {return value;},
+        series:_series,
+        tooltip_formatter: function(params) {
+          
+          var content = params[0].data+chart_unit;
+          return content;
+        }
+      });
+    }
   }
 }
 </script>
