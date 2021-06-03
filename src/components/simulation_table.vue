@@ -114,7 +114,7 @@
       label="操作"
       >
       <template slot-scope="scope">
-          <el-link type="primary" @click="toDetail(scope.row)" >详情</el-link>
+          <el-link type="primary" @click="toDetail(scope.row)" v-show="scope.row.is_show_detail == true">详情</el-link>
           <!-- <el-link type="primary" @click="handleEdit(scope.row)" >重算</el-link> -->
           <el-link type="primary" @click="remove(scope.row)" >删除</el-link>
       </template>
@@ -193,6 +193,7 @@ export default {
 
       toDetail:function(row){
 
+          this.$emit("clear");
           this.$router.push({"path":"/center/simulation_detail/"+row._id});
 
       }

@@ -195,12 +195,17 @@ export default {
             }else if(_data["status"] ==2){
                 _data["status_str"] = "已完成"; 
             }
-            _data["total_ror_value"] = (_data["last_current_value"] - _data["init_amount"]).toFixed(6);
-            if(_data["total_ror"] >= 0){
+           if(_data["total_ror"] > 0){
               _data["total_ror_color"] = "#00b464";
-            }else{
+            }else if(_data["total_ror"] < 0){
               _data["total_ror_color"] = "#fa4d56";
+            }else{
+               _data["total_ror_color"] = "";
             }
+            if(_data["total_ror"] ==0){
+                _data["last_current_value"] = _data["init_amount"];
+            }
+            _data["total_ror_value"] = (_data["last_current_value"] - _data["init_amount"]).toFixed(6);
 
              _data["avg_ror"]=_data["avg_ror"]+"%"
             _data["total_ror"]=_data["total_ror"]+"%"
