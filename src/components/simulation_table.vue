@@ -137,7 +137,7 @@ export default {
   data () {
     return {
       totalnum:0,
-      page_size:5,
+      page_size:20,
       page_no:1,
       data: []
     }
