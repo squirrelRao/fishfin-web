@@ -126,10 +126,10 @@
               </div>
             </el-col>
     </el-row>
-         <el-row>
+    <el-row>
             <el-col offset=1 span="22">
-              <div id="base_currency_chart" style="margin-top:10px;margin-bottom:10px;height:360px">
-                USDT变化
+              <div id="rsi_chart" style="margin-top:10px;margin-bottom:10px;height:360px">
+                RSI
               </div>
             </el-col>
     </el-row>
@@ -140,10 +140,10 @@
               </div>
             </el-col>
     </el-row>
-    <el-row>
+         <el-row>
             <el-col offset=1 span="22">
-              <div id="rsi_chart" style="margin-top:10px;margin-bottom:10px;height:360px">
-                RSI
+              <div id="base_currency_chart" style="margin-top:10px;margin-bottom:10px;height:360px">
+                USDT变化
               </div>
             </el-col>
     </el-row>
