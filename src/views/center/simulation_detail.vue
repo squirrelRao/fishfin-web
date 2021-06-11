@@ -274,7 +274,10 @@ export default {
       var _series = [];
       var colorList =[];
      
-     
+     if(chart_title=="RSI"){
+       y_data.push(this.rsi_sell);
+       y_data.push(this.rsi_buy);
+     }
       for(var i = 0; i < infos.length; i++){
           var item = infos[i];
           x_data.push(item["start_ktime_str"]);
