@@ -126,10 +126,24 @@
               </div>
             </el-col>
     </el-row>
-     <el-row>
+         <el-row>
             <el-col offset=1 span="22">
               <div id="base_currency_chart" style="margin-top:10px;margin-bottom:10px;height:360px">
                 USDT变化
+              </div>
+            </el-col>
+    </el-row>
+    <el-row>
+            <el-col offset=1 span="22">
+              <div id="price_chart" style="margin-top:10px;margin-bottom:10px;height:360px">
+                价格变化
+              </div>
+            </el-col>
+    </el-row>
+    <el-row>
+            <el-col offset=1 span="22">
+              <div id="rsi_chart" style="margin-top:10px;margin-bottom:10px;height:360px">
+                RSI
               </div>
             </el-col>
     </el-row>
@@ -140,6 +154,7 @@
               </div>
             </el-col>
     </el-row>
+    
      <el-row>
             <el-col offset=1 span="22">
               <div id="daily_ror_chart" style="margin-top:10px;margin-bottom:10px;height:360px">
@@ -176,7 +191,9 @@ export default {
       task_id:this.$route.params.id,
       backtest:[],
       base_currency:"usdt",
-      quote_currency:""
+      quote_currency:"",
+      rsi_buy:0,
+      rsi_sell:0
     }
   },
   components:{
@@ -207,7 +224,9 @@ export default {
             
             this.quote_currency = _data["quote_currency"];
             this.base_currency = _data["base_currency"];
-            this.backtest = res["backtest"]              
+            this.backtest = res["backtest"]   
+            this.rsi_buy =  _data["buy_rsi"];
+            this.rsi_sell =  _data["sell_rsi"];
 
             _data["status_str"] = "等待执行";
             if(_data["status"] == 1){
@@ -235,6 +254,8 @@ export default {
              this.drawChart(this.backtest["back_result"],"daily_ror_chart","每日收益","usdt");
              this.drawChart(this.backtest["back_result"],"base_currency_chart",this.base_currency,this.base_currency);
              this.drawChart(this.backtest["back_result"],"quote_currency_chart",this.quote_currency,this.quote_currency);
+             this.drawChart(this.backtest["back_result"],"price_chart",this.quote_currency+"价格",this.base_currency);
+             this.drawChart(this.backtest["back_result"],"rsi_chart","RSI","");
 
           }
       }).catch(err => {
@@ -265,6 +286,12 @@ export default {
           }else if(chart_title == this.quote_currency){
             y_data.push(item["current_quote_currency_balance"]);
 
+          }else if(chart_title== this.quote_currency+"价格"){
+            y_data.push(item["end_price"]);
+            
+          }else if(chart_title== "RSI"){
+            y_data.push(item["rsi"]);
+            
           }else{
             let y = (item["end_value"] - item["start_value"]).toFixed(6);
             y_data.push(y);
@@ -278,7 +305,7 @@ export default {
           
        }
 
-      if(chart_title=="累计收益率" || chart_title == this.quote_currency || chart_title == this.base_currency){
+      if(chart_title=="累计收益率"  || chart_title == this.quote_currency || chart_title == this.base_currency || chart_title == this.quote_currency+"价格"){
                 let series ;
    series = { name:_legend[0],
             data: y_data,
@@ -286,7 +313,47 @@ export default {
             smooth: true};
         _series.push(series);
 
-      }else{
+      }else if(chart_title == "RSI"){
+
+      let series = { name:_legend[0],
+            data: y_data,
+            type: "line",
+            smooth: true,
+            markLine: {
+                data: [
+                    {
+                                
+                               silent:false,             //鼠标悬停事件  true没有，false有
+                               lineStyle:{               //警戒线的样式  ，虚实  颜色
+                                   color:"#fa4d56",
+                               },
+                                   label:{
+                                   position:'end',
+                                   formatter:"RSI买("+this.rsi_buy+")"
+                               },
+                               yAxis:this.rsi_buy         
+                              
+                    },
+                    {
+                                
+                               silent:false,             //鼠标悬停事件  true没有，false有
+                               lineStyle:{               //警戒线的样式  ，虚实  颜色
+                                   color:"#00b464",
+                               },
+                                   label:{
+                                   position:'end',
+                                   formatter:"RSI卖("+this.rsi_sell+")"
+                               },
+                               yAxis:this.rsi_sell         
+                              
+                    }
+                ]
+            }
+            };
+        _series.push(series);
+          
+
+      } else{
                let bar = { name:_legend[0],
             data: y_data,
             type: "bar",
