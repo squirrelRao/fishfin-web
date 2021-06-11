@@ -128,11 +128,26 @@
     </el-row>
      <el-row>
             <el-col offset=1 span="22">
+              <div id="base_currency_chart" style="margin-top:10px;margin-bottom:10px;height:360px">
+                USDT变化
+              </div>
+            </el-col>
+    </el-row>
+     <el-row>
+            <el-col offset=1 span="22">
+              <div id="quote_currency_chart" style="margin-top:10px;margin-bottom:10px;height:360px">
+                quote变化
+              </div>
+            </el-col>
+    </el-row>
+     <el-row>
+            <el-col offset=1 span="22">
               <div id="daily_ror_chart" style="margin-top:10px;margin-bottom:10px;height:360px">
                 每日收益
               </div>
             </el-col>
     </el-row>
+    
     </div>
 </template>
 
@@ -159,7 +174,9 @@ export default {
       data: [],
       ror:[],
       task_id:this.$route.params.id,
-      backtest:[]
+      backtest:[],
+      base_currency:"usdt",
+      quote_currency:""
     }
   },
   components:{
@@ -187,6 +204,9 @@ export default {
         if(res["rc"] == 0){
         
             var _data = res["task"];
+            
+            this.quote_currency = _data["quote_currency"];
+            this.base_currency = _data["base_currency"];
             this.backtest = res["backtest"]              
 
             _data["status_str"] = "等待执行";
@@ -213,6 +233,8 @@ export default {
 
              this.drawChart(this.backtest["back_result"],"total_ror_chart","累计收益率","%");
              this.drawChart(this.backtest["back_result"],"daily_ror_chart","每日收益","usdt");
+             this.drawChart(this.backtest["back_result"],"base_currency_chart",this.base_currency,this.base_currency);
+             this.drawChart(this.backtest["back_result"],"quote_currency_chart",this.quote_currency,this.quote_currency);
 
           }
       }).catch(err => {
@@ -237,6 +259,12 @@ export default {
           x_data.push(item["start_ktime_str"]);
           if(chart_title == "累计收益率"){
             y_data.push(item["total_ror"])
+          }else if(chart_title == this.base_currency){
+            y_data.push(item["current_base_currency_balance"]);
+           
+          }else if(chart_title == this.quote_currency){
+            y_data.push(item["current_quote_currency_balance"]);
+
           }else{
             let y = (item["end_value"] - item["start_value"]).toFixed(6);
             y_data.push(y);
@@ -250,7 +278,7 @@ export default {
           
        }
 
-      if(chart_title=="累计收益率"){
+      if(chart_title=="累计收益率" || chart_title == this.quote_currency || chart_title == this.base_currency){
                 let series ;
    series = { name:_legend[0],
             data: y_data,
