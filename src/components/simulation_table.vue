@@ -9,58 +9,60 @@
     <el-table-column
       label="交易对"
       sortable
-      width="130">
+      width="100">
       <template slot-scope="scope">
       <span style="margin-left:0px;font-weight:bold;font-size:16px">{{ scope.row.quote_currency }}</span>/<span style="font-size:14px;;">{{ scope.row.base_currency }}</span>
       </template>
     </el-table-column>
+    <!--
     <el-table-column
       prop="strategy"
       label="交易策略"
       sortable
       width="100">
     </el-table-column>
+    -->
    <el-table-column
       prop="period"
-      label="交易频率"
+      label="频率"
       sortable
-      width="100">
+      width="75">
     </el-table-column>
     <el-table-column
       prop="start_time"
-      label="开始时间"
+      label="开始"
       sortable
-      width="100">
+      width="95">
     </el-table-column>
     <el-table-column
       prop="end_time"
-      label="结束时间"
+      label="结束"
       sortable
-      width="100">
+      width="95">
     </el-table-column>
      <el-table-column
       prop="limit_trade_count"
-      label="交易限额"
+      label="限额"
       sortable
-      width="130">
+      width="75">
     </el-table-column>
      <el-table-column
       prop="init_amount"
-      label="初始金额"
+      label="初始"
       sortable
-      width="130">
+      width="75">
     </el-table-column>
      <el-table-column
       prop="last_current_value"
-      label="最终金额"
+      label="最终"
       sortable
-      width="130">
+      width="105">
     </el-table-column>
      <el-table-column
       prop="buy_rsi"
       label="RSI买"
       sortable
-      width="90">
+      width="80">
             <template slot-scope="scope">
       <el-tooltip content="「 RSI 」>=「 RSI买 」时发出「 买入 」信号" placement="bottom" effect="light">
               <span>{{scope.row["buy_rsi"]}}</span>
@@ -71,7 +73,7 @@
       prop="sale_rsi"
       label="RSI卖"
       sortable
-      width="90">
+      width="80">
       <template slot-scope="scope">
        <el-tooltip content="「 RSI 」<=「 RSI卖 」时发出「 卖出 」信号" placement="bottom" effect="light">
               <span>{{scope.row["sell_rsi"]}}</span>
@@ -80,9 +82,9 @@
     </el-table-column>
      <el-table-column
       prop="total_ror_value"
-      label="累计收益"
+      label="收益"
       sortable
-      width="120">
+      width="100">
         <template slot-scope="scope">
 
               <span :style="{'color':scope.row.total_ror_color}">{{scope.row["total_ror_value"]}}</span>
@@ -90,9 +92,9 @@
     </el-table-column>
      <el-table-column
       prop="total_ror"
-      label="累计收益率"
+      label="收益率"
       sortable
-      width="120">
+      width="100">
         <template slot-scope="scope">
 
               <span :style="{'color':scope.row.total_ror_color}">{{scope.row["total_ror"]}}</span>
@@ -102,7 +104,7 @@
       prop="status_str"
       label="状态"
       sortable
-      width="80">
+      width="75">
     </el-table-column>
     <el-table-column
       prop="create_time_str"
