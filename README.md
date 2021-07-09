@@ -1,6 +1,8 @@
 # fishfin-web
 fishfin web
 
+鱼鳍-虚拟货币量化分析工具前端
+
 vue init webpack <project name>
 vue add element 
  
